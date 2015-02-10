@@ -1,0 +1,90 @@
+{% extends 'UTravelAdminBundle::container.html.twig' %}
+
+{% block content %}
+    
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <input type="hidden" id="service" value="{{ id_service }}">
+            <h1 class='text-center'>{{ title }}</h1>
+            <br />
+            {% if message %}
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    {{ message }}
+                </div>
+            </div>
+            {% endif %}
+            <br/>
+            <p>
+                Ici, vous avez la possibilité de mettre à jour régulièrement la page d'accueil du site pour le garder attractif auprès du public utcéen.
+            </p>
+            <form action="{{ path('utravel_welcome_carrousel') }}" method="POST" enctype='multipart/form-data'>
+            <fieldset>
+                <div class="form-group align">
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <input type="radio" name="option" value="video" id="video">
+                            </span>
+                            <input type="text" class="form-control" value="Vidéo YouTube" readonly>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group align">
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <span class="input-group-addon">
+                                <input type="radio" name="option" value="carrousel" id="carrousel">
+                            </span>
+                            <input type="text" class="form-control" value="Carrousel d'images" readonly>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+            <hr>
+
+            <div id="option_1" style="display:none;">
+                <p>
+                    La première option vous permet d'inclure une vidéo, principalement venant de la plateforme YouTube. Il suffit de récupérer le lien "embedded" (embarqué). Pour cela :
+                </p>
+                <ul>
+                    <li>Trouvez la vidéo de votre choix sur Youtube</li>
+                    <li>En dessous de la vidéo, cliquez sur l'onglet "Partager" ("Share" en anglais)</li>
+                    <li>Choisissez l'option "Intégrer" ("Embed" en anglais)</li>
+                    <li>Copiez le code de ce style dans le champ du formulaire :
+                        <xmp><iframe ...></iframe></xmp>
+                    </li>
+                </ul>
+                <div class="form-group">
+                    <label for="embedded">Lien vers la vidéo : </label>
+                    <textarea name="embedded" type="text" class="form-control">{{ iframe }}</textarea>
+                </div>
+                <hr>
+            </div>
+
+            <div id="option_2" style="display:none;">
+                <p>
+                    La seconde option vous permet de faire apparaitre un carrousel d'images. Pas de code informatique pour faire fonctionner le carrousel, vous n'avez qu'à actualiser le catalogue d'images qui constituera le caroussel.
+                </p>
+                <fieldset id="liste_images">
+                    
+                </fieldset>
+                <br>
+                    <div class="form-group">
+                        <label for="illustration">Nouvelle image :</label>
+                        <input type="file" name="illustration" class="filestyle">
+                    </div>
+                <hr>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-valid">Sauvegarder</button>
+            </form>
+            <br />
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block scripts %}
+    <script src="{{ asset('bundles/utraveladmin/js/carrousel.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends 'UTravelOpinionBundle::layout.html.twig' %}
+
+{% block title %}UTravel : Aidez-nous à nous améliorer{% endblock %}
+
+{% block head %}
+    <link href="{{ asset('bundles/utravelopinion/css/custom.css') }}" rel="stylesheet" type="text/css" media="all" />
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="{{ asset('bundles/utravelutravel/css/infos.css') }}" rel="stylesheet" type="text/css" media="all" />
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <h1 class='text-center'>Aidez-nous à nous améliorer</h1>
+            <br />
+
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <p>
+                        UTravel est le dernier nouveau-né du paysage web de l'UTC. Ouvert à l'utilisation publique dès ce semestre d'A14, le projet de ce site a été porté par Olivier Schoefs, directeur des Relations Internationales de l'UTC, et par Louise Maupas, étudiante représentant l'association Esperanto. Il a été concrétisé dans le cadre de l'UV LO18 par l'équipe d'étudiants GI composée de Damien Coqueux, Jonathan Adeline et Abdoul Khadre Diallo.
+                    </p>
+                    <br>
+                    <p>
+                        Le site est en version 1.0. Il se peut que vous trouviez quelques petits bugs, que l'ergonomie peut être perfectionnée sur un élément du site, ou encore qu'il manque un élément utile pour améliorer la navigation sur le site.
+                    </p>
+                    <br>
+                    <p>
+                        Toute remarque constructive est bonne à prendre pour que vous puissiez vous approprier au mieux ce site. Laissez-nous un message dans le champ de texte ci-dessous, il remontera jusqu'aux Relations Internationales qui en informeront les webmasters du site.
+                    </p>
+                </div>
+            </div>
+
+            <form action="{{ path('utravel_feedback_sent') }}" method="POST">
+                <textarea class="form-control" rows="10">
+                </textarea>
+
+                <br>
+                <button type="submit" class="btn btn-visit">Envoyer</button>
+                <br>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $('.active').removeClass();
+     </script>
+{% endblock %}

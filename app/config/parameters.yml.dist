@@ -1,0 +1,27 @@
+# This file is auto-generated during the composer install
+parameters:
+    database_driver: pdo_mysql
+    database_host: 127.0.0.1
+    database_port: null
+    database_name: symfony
+    database_user: root
+    database_password: null
+    mailer_transport: smtp
+    mailer_host: 127.0.0.1
+    mailer_user: null
+    mailer_password: null
+    locale: en
+    secret: ThisTokenIsNotSoSecretChangeIt
+
+#CAS UTC
+    cas_login_url:                      https://cas.utc.fr/cas/login
+    cas_logout_url:                     https://cas.utc.fr/cas/logout
+    cas_service_validate_url:           https://cas.utc.fr/cas/serviceValidate
+
+# bundle externe pour convertir les fiches pays en pdf
+knp_snappy:
+    pdf:
+        enabled:    true
+        # chemin vers l'executable à télécharger. A changer au deploiement
+        binary:     C:\wkhtmltopdf\wkhtmltopdf
+        options:    []

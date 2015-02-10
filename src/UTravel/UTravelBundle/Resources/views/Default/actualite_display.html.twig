@@ -1,0 +1,44 @@
+{% extends 'UTravelOpinionBundle::layout.html.twig' %}
+
+{% block title %}UTravel : {{ actu.titre }}{% endblock %}
+
+{% block head %}
+    <link href="{{ asset('bundles/utravelopinion/css/custom.css') }}" rel="stylesheet" type="text/css" media="all" />
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="{{ asset('bundles/utravelutravel/css/infos.css') }}" rel="stylesheet" type="text/css" media="all" />
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <h1 class='text-center'>{{ actu.titre }}</h1>
+            <br />
+            <div>
+            <span class="date">Rédigé le {{ actu.dateCreation|date("d/m/y") }}</span>
+            </div>
+            <br />
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div style="text-align:center;">
+                        <img src="{{ asset('uploads/actus/' ~ actu.imagePath) }}" height=200 >
+                    </div>
+                    <p> {{ actu.description|raw }} </p>
+                </div>
+            </div>
+            <a href="{{ path('utravel_actualites', { 'section' : '' }) }}">
+                <button type="button" class="btn btn-default">
+                    <i class="fa fa-mail-reply"></i>
+                    Retour aux actus
+                </button>
+            </a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $('.active').removeClass();
+        $('#informations').parent().addClass('active');
+     </script>
+{% endblock %}

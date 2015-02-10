@@ -1,0 +1,78 @@
+utravel_opinion_homepage:
+    pattern:  /
+    defaults: { _controller: UTravelOpinionBundle:Default:index }
+
+utravel_new_opinion:
+    pattern:  /nouveau_avis
+    defaults: { _controller: UTravelOpinionBundle:OpinionSubmit:new }
+    requirements:
+        _method: GET
+
+utravel_create_opinion:
+    pattern:  /creer_avis
+    defaults: { _controller: UTravelOpinionBundle:OpinionSubmit:create }
+    requirements:
+        _method: POST
+
+utravel_edit_opinion:
+    pattern:  /editer_avis/{opinion_id}
+    defaults: { _controller: UTravelOpinionBundle:OpinionSubmit:edit }
+    requirements:
+        _method: GET
+        opinion_id: \d+
+
+utravel_save_opinion:
+    pattern:  /sauvegarder_avis
+    defaults: { _controller: UTravelOpinionBundle:OpinionSubmit:save }
+    requirements:
+        _method: POST
+
+utravel_research_opinion:
+    pattern:  /rechercher_avis
+    defaults: { _controller: UTravelOpinionBundle:OpinionSearch:index }
+    requirements:
+        _method: GET
+
+utravel_search_opinion:
+    pattern:  /search
+    defaults: { _controller: UTravelOpinionBundle:OpinionSearch:search }
+    requirements:
+        _method: POST
+
+utravel_display_opinion:
+    pattern:  /avis/{opinion_id}
+    defaults: { _controller: UTravelOpinionBundle:OpinionSearch:displayOpinion }
+    requirements:
+        _method: GET
+        opinion_id: \d+
+
+utravel_account:
+    pattern:  /mon_compte
+    defaults: { _controller: UTravelOpinionBundle:Account:account }
+    requirements:
+        _method: GET
+        
+        
+utravel_account_change_mail:
+    pattern:  /mon_compte/change_mail
+    defaults: { _controller: UTravelOpinionBundle:Account:accountChangeMail }
+    requirements:
+        _method: POST
+        
+utravel_account_change_public:
+    pattern:  /mon_compte/change_public
+    defaults: { _controller: UTravelOpinionBundle:Account:accountChangePublic }
+    requirements:
+        _method: POST
+        
+utravel_delete_opinion:
+    pattern:  /supprimer_opinion
+    defaults: { _controller: UTravelOpinionBundle:OpinionSubmit:deleteOpinion }
+    requirements:
+        _method: POST
+        
+utravel_vote_opinion:
+    pattern:  /vote_opinion
+    defaults: { _controller: UTravelOpinionBundle:OpinionSubmit:voteOpinion }
+    requirements:
+        _method: POST

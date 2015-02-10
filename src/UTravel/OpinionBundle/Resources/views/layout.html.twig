@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset={{ _charset }}"/>
+        <meta name="robots" content="noindex,nofollow" />
+        <title>{% block title %}UTravel UTC - Partagez vos expériences à l'étranger{% endblock %}</title>
+
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/chosen/1.1.0/chosen.min.css">
+        <link href="{{ asset('bundles/utravelopinion/css/boostrap-multiselect.css') }}" rel="stylesheet" type="text/css" media="all" />
+        <link href="{{ asset('bundles/utravelopinion/css/superslides.css') }}" rel="stylesheet" type="text/css" media="all" />
+        <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/chosen/1.1.0/chosen.min.css" />
+        <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+        <link href="{{ asset('bundles/utravelopinion/css/main.css') }}" rel="stylesheet" type="text/css" media="all" />
+        <link href="{{ asset('bundles/utravelopinion/css/custom.css') }}" rel="stylesheet" type="text/css" media="all" />
+        {% block head %}{% endblock %}
+        <style>
+            #feedback_button { background-color: #f30; border: 0px; }
+            #feedback_button:hover { background-color: rgba(255, 41, 0, 0.8); }
+        </style>
+
+</head>
+<body id="body">
+    <div id="conteneur">
+        <header>
+            <nav id="navhead" class="navbar navbar-default" role="navigation" >
+                <div class="container-fluid">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+
+                        <a class="navbar-brand" href="{{ path('utravel_opinion_homepage') }}">
+                            <img src="{{ asset('bundles/utravelopinion/images/logo_utravel1.png') }}" alt="UTravel Logo" width="80px"/>
+                        </a>
+                    </div>
+
+
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse">
+                        <ul class="nav navbar-nav nav-pills">
+                            <li id="accueil"><a href="{{ path('utravel_opinion_homepage') }}">Accueil</a></li>
+                            <li id="avis" class="active">
+                                <a href="{{ path('utravel_research_opinion') }}">Avis</a>
+                                <div id="opinion-menu" class="container">
+                                    <div id="depot" class="pull-left">
+                                        <img src="{{ asset('bundles/utravelopinion/images/icon_depot.png') }}" />
+                                        <a id="depot-button" href="{{ path('utravel_new_opinion') }}" class="btn">Déposer avis</a>
+                                    </div>
+                                    <h3 id="consulter">Consulter les avis</h3>
+                                    <div id="menu">
+                                        <ul id="menu-type">
+                                            {% for type in journeyTypes %}
+                                                <li><a href="{{ path('utravel_research_opinion', {'type': type.getId()}) }}">{{ type.getName() }}</a></li>
+                                            {% endfor %}
+                                        </ul>
+                                        <ul id="menu-periode">
+                                            {% for sem in semesters %}
+                                                <li><a href="{{ path('utravel_research_opinion', {'sem': sem}) }}">{{ sem }}</a></li>
+                                            {% endfor %}
+                                        </ul>
+                                        <ul id="menu-pays">
+                                            {% for country in preferedCountries %}
+                                                <li><a href="{{ path('utravel_research_opinion', {'country': country.country}) }}">{{ country.name }}</a></li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                    <div id="search">
+                                        <a href="{{ path('utravel_research_opinion') }}">
+                                            <img src="{{ asset('bundles/utravelopinion/images/icon_search.png') }}" />
+                                            Plus de critères
+                                        </a>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <a href="#">Informations</a>
+                                <div id="informations" class="container">
+                                    <ul id="menu-info">
+                                        <li id="actus">
+                                            <a href="{{ path('utravel_actualites', { 'section': '' }) }}" target="_top">Actualités</a>
+                                        </li>
+                                        <li id="fiches">
+                                            <a href="{{ path('utravel_fiche_pays') }}" target="_top">Fiches pays</a>
+                                        </li>
+                                        <li id="universites">
+                                            <a href="{{ path('utravel_consult_universites') }}" target="_top">Universités</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            {% if app.session.get('role_U7E2R') == 'admin' %}
+                                <li><a href="{{ path('utravel_admin_homepage') }}" target="_top">Administration</a></li>
+                                {% endif %}
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right">
+                            {% if app.session.get('user_login_U7E2R') %}
+                                <li><a id="connexion-button2" href="{{ path('utravel_account') }}" target="_top">{{ app.session.get('user_login_U7E2R') }}</a></li>
+                                <li><a id="connexion-button" href="{{ path('utravel_logout') }}" target="_top">Déconnexion</a></li>
+                                {% else %}
+                                <li><a id="connexion-button" href="{{ path('utravel_login') }}" target="_top">Connexion</a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+            </nav>
+        </header>
+
+
+        <main>
+    {% block content %}{% endblock %}
+    </main>
+</div>
+<footer id="footer">
+    <div class="container">
+        &copy; 2014 UTravel
+
+        {% if app.session.get('user_login_U7E2R') %}
+        &nbsp;
+        <a href="{{ path('utravel_feedback') }}" class="btn" id="feedback_button" style="color:white;">
+            Aidez-nous à nous améliorer
+        </a>
+        {% endif %}
+        
+        <div class="pull-right">
+            <a href="http://www.utc.fr/">
+                <img id="logo-utc" src="{{ asset('bundles/utravelopinion/images/logo_utc.svg') }}" height="30"/>                                            
+            </a> -
+            <a href="http://assos.utc.fr/asso/esperanto">
+                <img id="logo-esperanto" src="{{ asset('bundles/utravelopinion/images/logo_esperanto.png') }}" height="30"/>                                           
+            </a>
+        </div>
+    </div>
+</footer>
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+<script src="//cdn.jsdelivr.net/chosen/1.1.0/chosen.jquery.min.js"></script>
+<script src="//cdn.jsdelivr.net/jquery.form/3.50/jquery.form.js"></script>
+<script src="{{ asset('bundles/utravelopinion/js/main.js') }}"></script>
+<!-- jQuery -->
+<script src="{{ asset('bundles/utravelopinion/js/jquery.easing.1.3.js') }} "></script>
+<script src="{{ asset('bundles/utravelopinion/js/jquery.animate-enhanced.min.js') }}"></script>
+<script src="{{ asset('bundles/utravelopinion/js/jquery.superslides.js') }}" type="text/javascript" charset="utf-8"></script>
+
+<script>
+    $('#search a')
+            .mouseover(function() {
+                $('#search a img').attr("src", "{{ asset('bundles/utravelopinion/images/icon_search_hover.png') }}");
+            })
+            .mouseout(function() {
+                $('#search a img').attr("src", "{{ asset('bundles/utravelopinion/images/icon_search.png') }}");
+            });
+    $('#img-consulter')
+            .mouseover(function() {
+                $(this).attr("src", "{{ asset('bundles/utravelopinion/images/icon_consulter_hover.png') }}");
+            })
+            .mouseout(function() {
+                $(this).attr("src", "{{ asset('bundles/utravelopinion/images/icon_consulter.png') }}");
+            });
+    $('#img-deposer')
+            .mouseover(function() {
+                $(this).attr("src", "{{ asset('bundles/utravelopinion/images/icon_deposer_hover.png') }}");
+            })
+            .mouseout(function() {
+                $(this).attr("src", "{{ asset('bundles/utravelopinion/images/icon_deposer.png') }}");
+            });
+</script>
+{% block javascripts %} {% endblock %}
+
+</body>
+</html>

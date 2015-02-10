@@ -1,0 +1,302 @@
+## YAML Template.
+UTravel\OpinionBundle\Entity\Opinion:
+    properties:
+        # General
+        country:
+            - NotBlank:
+                message: Pays invalide
+                groups: [general]
+            - Country:
+                message: Pays invalide
+                groups: [general] 
+        city:
+            - NotBlank:
+                message: Ville invalide
+                groups: [city] 
+            - Length:
+                min: 2
+                max: 50
+                minMessage: Valeur trop courte (minimum {{ limit }} caractères)
+                maxMessage: Valeur trop longue (maximum {{ limit }} caractères)
+                groups: [city]
+        
+        # Logement
+        housingType:
+            - NotNull:
+                message: Type de logement invalide
+                groups: [housing]
+        housingRent:
+            - NotBlank: 
+                message: Prix invalide
+                groups: [housing]
+            - Range:
+                min: 0
+                max: 9999
+                minMessage: Prix invalide
+                maxMessage: Le prix ne doit pas dépasser 9 999 €
+                invalidMessage: Prix invalide
+                groups: [housing]
+        noteHousing:
+            - NotBlank:
+                message: La valeur doit être comprise entre 0 et 10 (inclus)
+                groups: [housing]
+            - Range:
+                min: 0
+                max: 10
+                minMessage: La valeur doit être comprise entre 0 et 10 (inclus)
+                maxMessage: La valeur doit être comprise entre 0 et 10 (inclus)
+                invalidMessage: La valeur doit être comprise entre 0 et 10 (inclus)
+                groups: [housing]
+        housingComment:
+            - NotBlank:
+                message: Votre commentaire doit faire au moins 50 caractères
+                groups: [housing]
+            - Length:
+                min: 50
+                minMessage: Votre commentaire doit faire au moins {{ limit }} caractères
+                groups: [housing]
+                
+        # Contact logement        
+        housingOrganization:
+            - NotBlank: 
+                message: Organisation invalide
+                groups: [housing_contact]     
+            - Length:
+                min: 2
+                max: 50
+                minMessage: Valeur trop courte (minimum {{ limit }} caractères)
+                maxMessage: Valeur trop longue (maximum {{ limit }} caractères)
+                groups: [housing_contact]
+        housingAdress1:
+            - NotBlank: 
+                message: Adresse invalide
+                groups: [housing_contact]     
+            - Length:
+                min: 2
+                max: 255
+                minMessage: Valeur trop courte (minimum {{ limit }} caractères)
+                maxMessage: Valeur trop longue (maximum {{ limit }} caractères)
+                groups: [housing_contact]
+        housingAdress2:  
+            - Length:
+                max: 255
+                maxMessage: Valeur trop longue (maximum {{ limit }} caractères)
+                groups: [housing_contact]
+        housingPostalCode:
+            - NotBlank: 
+                message: Code postal invalide
+                groups: [housing_contact]     
+            - Length:
+                min: 4
+                max: 20
+                minMessage: Valeur trop courte (minimum {{ limit }} caractères)
+                maxMessage: Valeur trop longue (maximum {{ limit }} caractères)
+                groups: [housing_contact]
+        housingCity:
+            - NotBlank: 
+                message: Ville invalide
+                groups: [housing_contact]     
+            - Length:
+                min: 2
+                max: 100
+                minMessage: Valeur trop courte (minimum {{ limit }} caractères)
+                maxMessage: Valeur trop longue (maximum {{ limit }} caractères)
+                groups: [housing_contact]
+        housingCountry:
+            - NotBlank: 
+                message: Pays invalide
+                groups: [housing_contact]     
+            - Country:
+                message: Pays invalide
+                groups: [housing_contact] 
+        housingEmail:
+            - NotBlank: 
+                message: Pays invalide
+                groups: [housing_contact] 
+            - Email:
+                message: Email invalide
+                groups: [housing_contact] 
+        housingPhone:
+            - NotBlank: 
+                message: Téléphone invalide
+                groups: [housing_contact] 
+            - Length:
+                min: 10
+                max: 20
+                minMessage: Valeur trop courte (minimum {{ limit }} caractères)
+                maxMessage: Valeur trop longue (maximum {{ limit }} caractères)
+                groups: [housing_contact]
+        
+        # Vie étudiante
+        lifeComment:
+            - NotBlank:
+                message: Votre commentaire doit faire au moins 50 caractères
+                groups: [life]
+            - Length:
+                min: 50
+                minMessage: Votre commentaire doit faire au moins {{ limit }} caractères
+                groups: [life]
+        noteLife:
+            - NotBlank:
+                message: La valeur doit être comprise entre 0 et 10 (inclus)
+                groups: [life]
+            - Range:
+                min: 0
+                max: 10
+                minMessage: La valeur doit être comprise entre 0 et 10 (inclus)
+                maxMessage: La valeur doit être comprise entre 0 et 10 (inclus)
+                invalidMessage: La valeur doit être comprise entre 0 et 10 (inclus)
+                groups: [life]
+                
+        # Transport        
+        transportType:     
+            - NotNull:
+                message: Type de transport invalide
+                groups: [transport]
+        transportCompany:
+            - NotBlank: 
+                message: Compagnie invalide
+                groups: [transport]     
+            - Length:
+                min: 2
+                max: 50
+                minMessage: Valeur trop courte (minimum {{ limit }} caractères)
+                maxMessage: Valeur trop longue (maximum {{ limit }} caractères)
+                groups: [transport]
+        transportPrice:
+            - NotBlank: 
+                message: Prix invalide
+                groups: [transport]
+            - Range:
+                min: 0
+                max: 9999
+                minMessage: Prix invalide
+                maxMessage: Le prix ne doit pas dépasser 9 999 €
+                invalidMessage: Prix invalide
+                groups: [transport]
+                
+        # Bilan        
+        noteGeneral:
+            - NotBlank:
+                message: La valeur doit être comprise entre 0 et 10 (inclus)
+                groups: [conclusion]
+            - Range:
+                min: 0
+                max: 10
+                minMessage: La valeur doit être comprise entre 0 et 10 (inclus)
+                maxMessage: La valeur doit être comprise entre 0 et 10 (inclus)
+                invalidMessage: La valeur doit être comprise entre 0 et 10 (inclus)
+                groups: [conclusion]
+        generalComment:
+            - NotBlank: 
+                message: Votre avis général doit faire au moins 200 caractères
+                groups: [conclusion]
+            - Length:
+                min: 200
+                minMessage: Votre avis général doit faire au moins {{ limit }} caractères
+                groups: [conclusion]
+        
+       
+UTravel\OpinionBundle\Entity\OpinionStudy:
+    properties:
+        # Etudes
+        university:
+            - NotNull:
+                message: Université invalide
+                groups: [studying]
+        noteStudying:
+            - NotBlank:
+                message: La valeur doit être comprise entre 0 et 10 (inclus)
+                groups: [studying]
+            - Range:
+                min: 0
+                max: 10
+                minMessage: La valeur doit être comprise entre 0 et 10 (inclus)
+                maxMessage: La valeur doit être comprise entre 0 et 10 (inclus)
+                invalidMessage: La valeur doit être comprise entre 0 et 10 (inclus)
+                groups: [studying]
+        studyingComment:
+            - NotBlank:
+                message: Votre commentaire doit faire au moins 50 caractères
+                groups: [studying]
+            - Length:
+                min: 50
+                minMessage: Votre commentaire doit faire au moins {{ limit }} caractères
+                groups: [studying]
+       
+       
+UTravel\OpinionBundle\Entity\OpinionDiploma:
+    properties:
+        # Double diplome
+        diploma:
+            - NotBlank: 
+                message: Diplôme invalide
+                groups: [diploma]     
+            - Length:
+                min: 2
+                max: 100
+                minMessage: Valeur trop courte (minimum {{ limit }} caractères)
+                maxMessage: Valeur trop longue (maximum {{ limit }} caractères)
+                groups: [diploma]
+        
+       
+UTravel\OpinionBundle\Entity\OpinionInternship:
+    properties:
+        # Stage en entreprise
+        noteInternship:
+            - NotBlank:
+                message: La valeur doit être comprise entre 0 et 10 (inclus)
+                groups: [internship]
+            - Range:
+                min: 0
+                max: 10
+                minMessage: La valeur doit être comprise entre 0 et 10 (inclus)
+                maxMessage: La valeur doit être comprise entre 0 et 10 (inclus)
+                invalidMessage: La valeur doit être comprise entre 0 et 10 (inclus)
+                groups: [internship]
+        internshipComment:
+            - NotBlank:
+                message: Votre commentaire doit faire au moins 50 caractères
+                groups: [internship]
+            - Length:
+                min: 50
+                minMessage: Votre commentaire doit faire au moins {{ limit }} caractères
+                groups: [internship]
+        companyName:
+            - NotBlank: 
+                message: Entreprise invalide
+                groups: [internship]     
+            - Length:
+                min: 2
+                max: 100
+                minMessage: Valeur trop courte (minimum {{ limit }} caractères)
+                maxMessage: Valeur trop longue (maximum {{ limit }} caractères)
+                groups: [internship]
+        companyField:
+            - NotBlank: 
+                message: Domaine d'activité invalide
+                groups: [internship]     
+            - Length:
+                min: 2
+                max: 255
+                minMessage: Valeur trop courte (minimum {{ limit }} caractères)
+                maxMessage: Valeur trop longue (maximum {{ limit }} caractères)
+                groups: [internship]
+        internshipTitle:
+            - NotBlank: 
+                message: Intitulé du stage invalide
+                groups: [internship]     
+            - Length:
+                min: 2
+                max: 255
+                minMessage: Valeur trop courte (minimum {{ limit }} caractères)
+                maxMessage: Valeur trop longue (maximum {{ limit }} caractères)
+                groups: [internship]
+        internshipDescription:
+            - NotBlank: 
+                message: Description du stage invalide
+                groups: [internship]     
+            - Length:
+                min: 2
+                minMessage: Valeur trop courte (minimum {{ limit }} caractères)
+                groups: [internship]

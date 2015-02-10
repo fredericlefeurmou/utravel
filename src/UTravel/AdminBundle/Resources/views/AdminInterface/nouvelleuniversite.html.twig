@@ -1,0 +1,56 @@
+{% extends 'UTravelAdminBundle::container.html.twig' %}
+
+{% block content %}
+    
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <input type="hidden" id="service" value="{{ id_service }}">
+            <h1 class='text-center'>{{ title }}</h1>
+            <br />
+            <div class="form-help center">Tous les champs sont obligatoires.</div>
+            <br/>
+            <form action="{{ path('utravel_valid_universities') }}" method="post">
+                <input type="hidden" name="id_univ" value="{{ id_univ }}">
+                <div class="form-group">
+                    <label for="nom">Nom de l'université :</label>
+                    <input type="text" name="nom_univ" class="form-control" value="{{ champs.nom }}">
+                </div>
+
+                <div class="form-group">
+                    <label for="ville">Ville : </label>
+                    <input name="ville" type="text" class="form-control" value="{{ champs.ville }}">
+                </div>
+
+                <div class="form-group">
+                    <label for="pays">Pays : </label>
+                    <select id="nom_pays" name="nom_pays" class="form-control">
+                        {% include 'UTravelOpinionBundle:OpinionSubmit:country_list.html.twig' %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="url">Site web de l'université : </label>
+                    <input name="url" type="text" class="form-control" value="{{ champs.lien }}">
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-valid">
+                    <i class="fa fa-share"></i>
+                    {% if id_univ > 0 %}
+                    <span>  Modifier</span>
+                    {% else %}
+                    <span>  Créer</span>
+                    {% endif %}
+                </button>
+
+            </form>
+            <br />
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        $('#nom_pays').val("{{ champs.pays }}");
+    </script>
+{% endblock %}

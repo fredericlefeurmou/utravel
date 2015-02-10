@@ -1,0 +1,28 @@
+/* Fil d'actualites */
+.panel, .panel-default { border-color: #066; }
+.panel-default > .panel-heading, thead { background-color: #066; color : #FFF; }
+.panel-default > .panel-body > .panel-default { border-color : #ff3300; }
+
+.panel-body table { margin: 15px; }
+.panel-body table tr { vertical-align:top; }
+
+.actu-link .panel-body { text-decoration:none; color:black; }
+.content { padding-left:15px; }
+.titre { font-size: 19px; font-weight: bold; color: #066;}
+
+.text > :not(:first-child) { display:none; }
+.text > :last-child { display:inline; }
+
+/* Liste des fiches pays */
+.souligne, .date { text-decoration: underline; }
+.orange { color : #FFF; }
+
+/* Universites */
+.univ-link .panel-body { text-decoration:none; color:black; }
+.center { text-align: center; }
+
+.country { background-color: #f30; color: #fff; border: 0px; }
+.btn-visit { background-color: #066; color: #fff; }
+.btn-visit:hover { background-color: rgba(0, 102, 102, 0.8); color: #fff; }
+
+/*  */

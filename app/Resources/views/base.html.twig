@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}Bienvenu sur le site de UTravel.{% endblock %}</title>
+        {% stylesheets
+            '@WebBundle/Resources/public/css/custom.css'
+            '@WebBundle/Resources/public/css/bootstrap.css' %}
+            <link rel="stylesheet" href="{{ asset_url }}" />
+        {% endstylesheets %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+
+    </head>
+    <body id="body">
+        {% block body %}{% endblock %}
+        {% javascripts '@WebBundle/Resources/public/js/*' %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+        {% endjavascripts %}
+        </body>
+    </html>

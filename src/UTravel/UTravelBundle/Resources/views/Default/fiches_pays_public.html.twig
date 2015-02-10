@@ -1,0 +1,63 @@
+{% extends 'UTravelOpinionBundle::layout.html.twig' %}
+
+{% block title %}UTravel : Fiches pays{% endblock %}
+
+{% block head %}
+    <link href="{{ asset('bundles/utravelopinion/css/custom.css') }}" rel="stylesheet" type="text/css" media="all" />
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="{{ asset('bundles/utravelutravel/css/infos.css') }}" rel="stylesheet" type="text/css" media="all" />
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <h1 class='text-center'>{{ title }}</h1>
+            <br />
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Késako ?</h3>
+                </div>
+                <div class="panel-body">
+                    <p>
+                        Les Relations Internationales vous proposent sur UTravel les fiches pays.
+                    </p>
+                    <p>
+                        Les fiches pays regroupent tous les éléments factuels relatifs à un pays, qui vous seront utiles pour préparer votre voyage.
+                    </p>
+                    <p>
+                        Ci-dessous, vous trouverez l'ensemble des pays qui posssèdent leurs fiches spécifiques. Vous pouvez les consulter en ligne en cliquant sur dessus. Vous pouvez également les exporter en format PDF pour les emmener avec vous en voyage, dans votre valise !
+                    </p>
+                </div>
+            </div>
+            <br>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Pays disponibles</h3>
+                </div>
+                <div class="panel-body">
+                    {% for fiche in fiches %}
+                        <div class="row">
+                        <a href="{{ path('utravel_consult_fiche', { 'pays' : fiche.nom }) }}">
+                            <button type="button" class="btn btn-default col-xs-10">{{ fiche.nom }} : Consulter en ligne</button>
+                        </a>
+                        <a href="{{ path('utravel_consult_fiche', { 'pays' : fiche.nom }) }}?pdf=true">
+                            <button type="button" class="btn btn-danger col-xs-2">
+                                <i class="fa fa-file-pdf-o"></i><span>  PDF</span>
+                            </button>
+                        </a>
+                    </div>
+                        <hr>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $('.active').removeClass();
+        $('#informations').parent().addClass('active');
+     </script>
+{% endblock %}

@@ -1,0 +1,395 @@
+{% extends 'UTravelOpinionBundle::layout.html.twig' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-3">
+            <a id="link-return-list" href="{{ path('utravel_research_opinion') }}"><i class="fa fa-arrow-circle-left"></i> Retour liste d'avis</a>
+        </div>
+        <div class="col-md-6">
+            <div id="opinion-quick-nav">
+                <ul class="nav nav-pills">
+                    <li class="active"><a href="#">Haut</a></li>
+                    {% if opinion.journeyType == 1 or opinion.journeyType == 2 %}
+                        <li><a href="#studying">Etude</a></li>
+                    {% elseif opinion.journeyType == 3 %}
+                        <li><a href="#internship">Stage</a></li>
+                    {% endif %}
+                    {% if opinion.getHousingEnabled() %}
+                        <li><a href="#housing">Logement</a></li>
+                    {% endif %}
+                    <li><a href="#life">Vie étudiante</a></li>
+                    {% if opinion.getTransportEnabled() %}
+                        <li><a href="#transport">Transport</a></li>
+                    {% endif %}
+              </ul>
+            </div>
+        </div>
+        <div id="general-info" class="col-md-4">
+            <a class="thumbs-up vote-link" href="javascript:addOpinionVote()"><i class="fa fa-thumbs-up"></i> Cet avis est pertinent</a>
+            <a class="vote-login" style="color: rgb(255,81,0);" href="{{ path('utravel_login') }}">Vous devez être connecté pour voter</a>
+            <span class="vote-status"></span>
+
+            <div class="well well-sm">
+                <h4>Général</h4>
+
+                {% if opinion.journeyType == 1 or opinion.journeyType == 2 %}
+                    <i class="fa fa-graduation-cap"></i>
+                {% elseif opinion.journeyType == 3 %}
+                    <i class="fa fa-briefcase"></i>
+                {% else %}
+                    <i class="fa fa-sun-o"></i>
+                {% endif %}
+                {{ journeyType.getName() }}
+
+                <br />
+               <i class="fa fa-flask"></i>
+               {% if opinion.getBranch() %}
+                    {{ opinion.getBranch() }}
+               {% else %}
+                   Tronc commun
+               {% endif %}
+               {% if opinion.getSpecialization() %}
+                   ({{ opinion.getSpecialization() }})
+               {% endif %}
+
+                <br />
+               {% if opinion.getLanguage() %}
+                    <i class="fa fa-comment"></i>  {{ opinion.getLanguage() }}
+                    <br />
+               {% endif %}
+
+                <i class="fa fa-globe"></i>  {{ opinion.getLocalCountry() }}
+
+                <br />
+                <i class="fa fa-building"></i>  {{ opinion.getCity() }}
+            </div>
+
+            <div class="well well-sm">
+                <h4>Notes</h4>
+
+                <span class="note-label">Général : </span> <span class="note-part">{{ opinion.getNoteGeneral() }} / 10</span>
+                <br />
+                {% if opinion.journeyType == 1 or opinion.journeyType == 2 %}
+                    <span class="note-label">Etude : </span> <span class="note-part">{{ opinion.getNoteStudying() }} / 10</span>
+                    <br />
+                {% elseif opinion.journeyType == 3 %}
+                    <span class="note-label">Stage : </span> <span class="note-part">{{ opinion.getNoteInternship() }} / 10</span>
+                    <br />
+                {% endif %}
+               {% if opinion.getHousingEnabled() %}
+                    <span class="note-label">Logement : </span> <span class="note-part">{{ opinion.getNoteHousing() }} / 10</span>
+                    <br />
+               {% endif %}
+                <span class="note-label">Vie étudiante : </span> <span class="note-part">{{ opinion.getNoteLife() }} / 10</span>
+
+            </div>
+
+
+            {% if opinion.journeyType == 1 or opinion.journeyType == 2 %}
+                <div class="well well-sm">
+                    <h4>Etudes</h4>
+
+                    <i class="fa fa-university"></i>  {{ opinion.getUniversity().getName() }}
+                    <br />
+                    <a  style="color: rgb(255,81,0);" href="{{ opinion.getUniversity().getLink() }}" target="_blank">Site web de l'université</a>
+
+                </div>
+            {% elseif opinion.journeyType == 3 %}
+                <div class="well well-sm">
+                    <h4>Entreprise</h4>
+
+                    <i class="fa fa-building-o"></i>  {{ opinion.getCompanyName() }}
+                    <br />
+
+                    <i class="fa fa-space-shuttle"></i>  {{ opinion.getCompanyField() }}
+
+                    {% if opinion.getCompanyLink() %}
+                        <br />
+                        <a  style="color: rgb(255,81,0);" href="{{ opinion.getCompanyLink() }}" target="_blank">Site web de l'entreprise</a>
+                    {% endif %}
+
+                </div>
+            {% endif %}
+
+            {% if opinion.getHousingEnabled() %}
+                <div class="well well-sm">
+                    <h4>Logement</h4>
+
+                    <span class="housing-label">Type : </span> <span class="housing-value">{{ opinion.getHousingType().getName() }}</span>
+                    <br />
+                    <span class="housing-label">Loyer : </span> <span class="housing-value">{{ opinion.getHousingRent() }} &euro;</span>
+
+                </div>
+            {% endif %}
+
+            <div class="well well-sm">
+                <h4>Auteur</h4>
+
+                {% if opinion.getAuthor() != null and opinion.getAuthor().getPublic() %}
+                    
+                    {% if userAuthentified %}
+                        <i class="fa fa-user"></i> {{ opinion.getAuthor().getFirstname() }} {{ opinion.getAuthor().getLastname() }}
+                        <br />
+                        <i class="fa fa-envelope"></i> {{ opinion.getAuthor().getMail() }}
+                    {% else %}
+                        Vous devez être connecté pour ces informations. <a href="{{ path('utravel_login') }}">Se connecter</a>
+                    {% endif %}
+                    
+                {% else %}
+                    L'auteur souhaite resté anonyme
+                {% endif %}
+            </div>
+        </div>
+
+
+        <div id="opinion-content" class="col-md-7 col-md-offset-1">
+            <h1>{{ opinion.getTitle() }} <small>{{ opinion.getNoteGeneral() }} / 10</small></h1>
+
+            <p class="opinion-comment">
+                {{ opinion.getGeneralComment() }}
+            </p>
+
+            {% if opinion.journeyType == 1 or opinion.journeyType == 2 %}
+                <div id="studying">
+                    <h2>Etudes <small>{{ opinion.getNoteStudying() }} / 10</small></h2>
+
+                    <p class="opinion-comment">
+                        {{ opinion.getStudyingComment() }}
+                    </p>
+
+                    {% if opinion.getCourses().count() > 0 %}
+                        <h3>Matières étudiées</h3>
+                        <table class="table">
+                            <thead>
+                                <tr><th>Intitulé</th><th>Description</th></tr>
+                            </thead>
+                            <tbody>
+                                {% for course in opinion.getCourses() %}
+                                    <tr>
+                                        <td>{{ course.getTitle() }}</td>
+                                        <td>{{ course.getDescription() }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    {% endif %}
+                </div>
+            {% elseif opinion.journeyType == 3 %}
+                <div id="internship">
+                    <h2>Stage <small>{{ opinion.getNoteInternship() }} / 10</small></h2>
+
+                    <div class="well well-sm row">
+                        <div class="col-md-4">
+                            <span class="housing-label">Entreprise : </span> <span class="housing-value">{{ opinion.getCompanyName() }}</span>
+                        </div>
+                        <div class="col-md-6 col-md-offset-2">
+                            <span class="housing-label">Secteur : </span> <span class="housing-value">{{ opinion.getCompanyField() }} </span>
+                        </div>
+                    </div>
+
+                    <strong>Intitulé : </strong> {{ opinion.getInternshipTitle() }}
+                    <br />
+                    <p class="opinion-comment">
+                        {{ opinion.getInternshipDescription() }}
+                    </p>
+
+                    <h3>Commentaire sur le stage</h3>
+                    <p class="opinion-comment">
+                        {{ opinion.getInternshipComment() }}
+                    </p>
+                </div>
+            {% endif %}
+
+            {% if opinion.getHousingEnabled() %}
+                <div id="housing">
+                    <h2>Logement <small>{{ opinion.getNoteHousing() }} / 10</small></h2>
+
+                    <div class="well well-sm row">
+                        <div class="col-md-3">
+                            <span class="housing-label">Type : </span> <span class="housing-value">{{ opinion.getHousingType().getName() }}</span>
+                        </div>
+                        <div class="col-md-3 col-md-offset-6">
+                            <span class="housing-label">Loyer : </span> <span class="housing-value">{{ opinion.getHousingRent() }} &euro;</span>
+                        </div>
+                    </div>
+
+                    <p class="opinion-comment">
+                        {{ opinion.getHousingComment() }}
+                    </p>
+
+                    {% if opinion.getHousingContactEnabled() %}
+                        <div id="housing-contact" class="well well-sm">
+                            <h3>Contact de l'organisme loueur</h3>
+                            
+                            {% if userAuthentified %}
+                                <p class="text-center">
+                                    {{ opinion.getHousingOrganization() }}
+                                    <br /> {{ opinion.getHousingAdress1() }}
+                                    {% if opinion.getHousingAdress2() %}
+                                        <br /> {{ opinion.getHousingAdress2() }}
+                                    {% endif %}
+                                    <br />
+                                    {{ opinion.getHousingPostalCode() }}
+                                    {{ opinion.getHousingCity() }},
+                                    {{ opinion.getHousingLocalCountry() }}
+                                    {% if opinion.getHousingEmail() %}
+                                        <br /> Email : {{ opinion.getHousingEmail() }}
+                                    {% endif %}
+                                    {% if opinion.getHousingPhone() %}
+                                        <br /> Tél : {{ opinion.getHousingPhone() }}
+                                    {% endif %}
+                                </p>
+                            {% else %}
+                                <p class="text-center">
+                                    <strong>Vous devez être connecté pour ces informations. <a href="{{ path('utravel_login') }}">Se connecter</a></strong>
+                                </p>
+                            {% endif %}
+                            
+                        </div>
+                    {% endif %}
+                </div>
+            {% endif %}
+
+            <div id="life">
+                <h2>Vie étudiante <small>{{ opinion.getNoteLife() }} / 10</small></h2>
+
+                <p class="opinion-comment">
+                    {{ opinion.getLifeComment() }}
+                </p>
+            </div>
+
+            {% if opinion.getTransportEnabled() %}
+                <div id="transport">
+                    <h2>Transport</h2>
+
+                    <div class="well well-sm row">
+                        <div class="col-md-2">
+                            <span class="transport-label">Type : </span> <span class="transport-value">{{ opinion.getTransportType().getName() }}</span>
+                        </div>
+                        <div class="col-md-7 text-center">
+                            <span class="transport-label">Compagnie : </span> <span class="transport-center-value">{{ opinion.getTransportCompany() }}</span>
+                        </div>
+                        <div class="col-md-2 col-md-offset-1">
+                            <span class="transport-label">Prix : </span> <span class="transport-value">{{ opinion.getTransportPrice() }} &euro;</span>
+                        </div>
+                    </div>
+
+                    {% if opinion.getTransportComment() %}
+                        <strong>Commentaire :</strong>
+                        <p class="opinion-comment">
+                            {{ opinion.getTransportComment() }}
+                        </p>
+                            <br />
+                    {% endif %}
+
+                    {% if opinion.getTransportOnSite() %}
+                        <strong>Transport sur place :</strong>
+
+                        <p class="opinion-comment">
+                            {{ opinion.getTransportOnSite() }}
+                        </p>
+                    {% endif %}
+                </div>
+            {% endif %}
+
+                <br /><br />
+
+
+                {% if opinion.getGeneralAdvice() %}
+                    <h4>Conseil pour la préparation du séjour</h4>
+                    <p class="opinion-comment">
+                        {{ opinion.getGeneralAdvice() }}
+                    </p>
+                    <br /><br />
+                {% endif %}
+
+                    
+                    {% if opinion.getAuthor() != null and opinion.getAuthor().getPublic() %}
+                            <p>
+                                <strong>
+                                    Pour plus d'informations ou pour échanger sur ce séjour, l'auteur de cet avis a laissé ses coordonnées :
+                                </strong>
+                            </p>
+                            
+                        {% if userAuthentified %}
+                            <div class="well well-sm row">
+                                <div class="col-md-6">
+                                    <i class="fa fa-user"></i> <strong>{{ opinion.getAuthor().getFirstname() }} {{ opinion.getAuthor().getLastname() }}</strong>
+                                </div>
+                                <div class="col-md-6">
+                                    <i class="fa fa-envelope"></i> <strong>{{ opinion.getAuthor().getMail() }}</strong>
+                                </div>
+                            </div>
+                        {% else %}
+                            <div class="well well-sm row">
+                                <div class="col-md-12">
+                                    <strong>Vous devez être connecté pour voir les coordonnées de l'auteur. <a href="{{ path('utravel_login') }}">Se connecter</a></strong>
+                                </div>
+                            </div>
+                        {% endif %}
+                        
+                    {% endif %}
+
+                <p>
+                    <strong>Vous avez trouvé cet avis utile ? </strong>
+                    <a class="thumbs-up vote-link" href="javascript:addOpinionVote()"><i class="fa fa-thumbs-up"></i> Cet avis est pertinent</a>
+                    <a class="vote-login" href="{{ path('utravel_login') }}">Vous devez être connecté pour voter</a>
+                    <span class="vote-status"></span>
+                </p>
+
+
+            </div>
+
+
+
+        </div>
+
+{% endblock content %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+
+        $(function () {
+            var top = $('#opinion-quick-nav').offset().top;
+
+                console.log(top);
+            $(window).scroll(function() {
+                var s = $(window).scrollTop();
+                console.log(s, top);
+                if (s > top) {
+                    $('#opinion-quick-nav').addClass("quick-nav-top");
+                } else {
+                    $('#opinion-quick-nav').removeClass("quick-nav-top");
+                }
+                $('#opinion-quick-nav li.active').removeClass('active');
+                $('#opinion-quick-nav li').first().addClass('active');
+                $('#opinion-content > div').each(function () {
+                   if (s > $(this).offset().top-30) {
+                      $('#opinion-quick-nav li.active').removeClass('active');
+                      $('#opinion-quick-nav li a[href=#'+$(this).attr('id')+']').closest('li').addClass('active');
+                   }
+                });
+            });
+        });
+        
+        function addOpinionVote () {
+            $('.vote-link').hide();
+            $('.vote-status').show().html('<img src="data:image/gif;base64,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"/>');
+            $.post('{{ path('utravel_vote_opinion') }}', {'opinion_id': {{ opinion.getId() }} })
+                    .done(function (data) {
+                        $('.vote-status').hide();
+                        if (data.status === 'ok') {
+                           $('.vote-status').text('Merci d\'avoir voté').show();
+                        } else if (data.status === 'not_connected') {
+                           $('.vote-login').show();
+                        } else if (data.status === 'is_author') {
+                           $('.vote-status').text('Bien essayé, mais tu ne m\'auras pas comme ça').show();
+                        }  else if (data.status === 'already_voted') {
+                           $('.vote-status').text('Vous avez déjà voté').show();
+                        }
+                    });
+        }
+
+    </script>
+{% endblock %}

@@ -1,0 +1,370 @@
+{% extends 'UTravelOpinionBundle::layout.html.twig' %}
+
+{% block content %}
+    <form id="opinion-form" action="{{ path('utravel_save_opinion') }}" method="POST" novalidate>
+        <input type="hidden" name="id_opinion" value="{{ opinion.getId() }}" />
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <h1 class='text-center'>Création / Edition d'un avis</h1>
+
+                <br />
+                <p id="global-errors"></p>
+                <br />
+
+                <div class="tabbable tabs-left">
+                    <ul class="nav nav-tabs" id="tab-menu">
+                        <li class="active"><a href="#tab-general" data-toggle="tab">Général</a></li>
+                        {% if opinion.journeyType == 1 or opinion.journeyType == 2 %}
+                            <li><a href="#tab-studying" data-toggle="tab">Etude</a></li>
+                        {% elseif opinion.journeyType == 3 %}
+                            <li><a href="#tab-company" data-toggle="tab">Stage</a></li>
+                        {% endif %}
+                        <li><a href="#tab-housing" data-toggle="tab">Logement</a></li>
+                        <li><a href="#tab-life" data-toggle="tab">Vie étudiante</a></li>
+                        <li><a href="#tab-transport" data-toggle="tab">Transport</a></li>
+                        <li><a href="#tab-final" data-toggle="tab">Bilan</a></li>
+                    </ul>
+                    <div id="edit-opinion" class="tab-content">
+                        <div class="tab-pane active" id="tab-general">
+                            {{ form_label(form.branch) }}
+                            {{ form_widget(form.branch, {'attr': {'class': 'chosen-single'}}) }}
+                           <span id="err-branch" class="form-error-msg"></span>
+                             <br /><br />
+                            {{ form_label(form.specialization) }}
+                            {{ form_widget(form.specialization, {'attr': {'class': 'chosen-single'}}) }}
+                            <span id="err-spacialization" class="form-error-msg"></span>
+                            <br /><br />
+                            {{ form_label(form.fullSemester) }}
+                            {{ form_widget(form.fullSemester, {'attr': {'class': 'chosen-single'}}) }}
+                            <span id="err-fullSemester" class="form-error-msg"></span>
+                            <br /><br />
+                            {{ form_label(form.country) }}
+                            {{ form_widget(form.country, {'attr': {'class': 'chosen-single-search'}}) }}
+                            <span id="err-country" class="form-error-msg"></span>
+                            <br /><br />
+                            {% if opinion.journeyType > 2 %}
+                                {{ form_label(form.city) }}
+                                {{ form_widget(form.city, {attr: { class: 'form-control form-inline form-small', placeholder: 'Ville' } }) }}
+                                <span id="err-city" class="form-error-msg"></span>
+                                <br /><br />
+                            {% endif %}
+                            {{ form_label(form.language) }}
+                            {{ form_widget(form.language, {'attr': {'class': 'chosen-single'}}) }}
+                            <span id="err-language" class="form-error-msg"></span>
+                            <br />
+                            <span class="form-help">Note : il s'agit de la langue utilisé pour les cours ou en entreprise.</span>
+                        </div>
+                    {% if opinion.journeyType == 1 or opinion.journeyType == 2 %}
+                        <div class="tab-pane" id="tab-studying">
+                            {{ form_label(form.university) }}
+                            {{ form_widget(form.university, {'attr': {'class': 'chosen-single-search'}}) }}
+                            <span id="err-university" class="form-error-msg"></span>
+                            <br /><br />
+                            {% if opinion.journeyType == 2 %}
+                                <p id="err-diploma" class="form-error-msg"></p>
+                                {{ form_label(form.diploma) }}
+                                {{ form_widget(form.diploma, {attr: { class: 'form-control form-inline', placeholder: 'Nom du diplôme préparé' } }) }}
+                                <br /><br />
+                            {% endif %}
+                            {{ form_label(form.noteStudying) }}
+                            <div class="input-group form-note">
+                            {{ form_widget(form.noteStudying, {'attr': {'class': 'input-num input-note form-control'}}) }}
+                                <span class="input-group-addon"> / 10</span>
+                            </div>
+                            <span id="err-noteStudying" class="form-error-msg top"></span>
+                            <br /><br />
+                            <h3>Matières étudiées</h3>
+                            <span class="form-help">Renseignez ici ici les matières étudiées durant votre séjour avec pour chaque matière l'intitulé et une bréve description, si vous disposez d'une fiche d'évaluation pour la matière vous pouvez l'uploader.</span>
+                            {% for course in form.courses %}
+                                <div class="container-fluid course-div">
+                                    <div class="row form-inline">
+                                        <div class="col-md-3">
+                                            {{ form_widget(course.title, {attr: {
+                                                class: 'form-control form-inline course-title',
+                                                placeholder: 'Intitulé'
+                                            } }) }}
+                                        </div>
+                                        <div class="col-md-6">
+                                            {{ form_widget(course.description, {attr: {
+                                                class: 'form-control form-inline course-description inline-texarea',
+                                                placeholder: 'Description de la matière',
+                                                rows: 1
+                                            } }) }}
+                                        </div>
+                                        <div class="col-md-3">
+                                            {{ form_widget(course.evaluationFile, {attr: {
+                                                class: 'course-file file-with-btn',
+                                                placeholder: 'Description de la matière',
+                                                style: 'display: none;'
+                                            } }) }}
+                                            <button type="button" class="btn btn-default btn-upload">Fiche d'évaluation</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                            <button id="add-course" type="button" class="btn btn-default">Ajouter une matière</button>
+                            <div class="container-fluid course-div course-model">
+                                <div class="row form-inline">
+                                    <div class="col-md-3">
+                                        {{ form_widget(form.courses.vars.prototype.title, {attr: {
+                                            class: 'form-control form-inline course-title',
+                                            placeholder: 'Intitulé'
+                                        } }) }}
+                                    </div>
+                                    <div class="col-md-6">
+                                        {{ form_widget(form.courses.vars.prototype.description, {attr: {
+                                            class: 'form-control form-inline course-description inline-texarea',
+                                            placeholder: 'Description de la matière',
+                                            rows: 1
+                                        } }) }}
+                                    </div>
+                                    <div class="col-md-3">
+                                        {{ form_widget(form.courses.vars.prototype.evaluationFile, {attr: {
+                                            class: 'course-file file-with-btn',
+                                            placeholder: 'Description de la matière',
+                                            style: 'display: none;'
+                                        } }) }}
+                                        <button type="button" class="btn btn-default btn-upload">Fiche d'évaluation</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <h3>Avis sur les études</h3>
+                            <span class="form-help">Précisez ici votre avis général sur la qualité des études et les matières suivies.</span>
+                            <p id="err-studyingComment" class="form-error-msg"></p>
+                            {{ form_widget(form.studyingComment, {attr: {
+                                class: 'form-control',
+                                placeholder: 'Avis général sur les études et les matières étudiées',
+                                rows: 6
+                            } }) }}
+                        </div>
+                        
+                    {% elseif opinion.journeyType == 3 %}
+
+                        <div class="tab-pane" id="tab-company">
+                            <h3>Entreprise</h3> 
+                            <p id="err-companyName" class="form-error-msg"></p>
+                            {{ form_label(form.companyName) }}
+                            {{ form_widget(form.companyName, {attr: { class: 'form-control form-inline', placeholder: 'Nom de l\'entreprise' } }) }}
+                            <br /><br />
+                            <p id="err-companyLink" class="form-error-msg"></p>
+                            {{ form_label(form.companyLink) }}
+                            {{ form_widget(form.companyLink, {attr: { class: 'form-control form-inline', placeholder: 'Site web de l\'entreprise' } }) }}
+                            <br /><br />
+                            <p id="err-companyField" class="form-error-msg"></p>
+                            {{ form_label(form.companyField) }}
+                            {{ form_widget(form.companyField, {attr: { class: 'form-control form-inline', placeholder: 'Domaine d\'activité de l\'entreprise' } }) }}
+                            <br /><br />
+                            <h3>Stage</h3> 
+                            <p id="err-internshipTitle" class="form-error-msg"></p>
+                            {{ form_label(form.internshipTitle) }}
+                            {{ form_widget(form.internshipTitle, {attr: { class: 'form-control form-inline', placeholder: 'Intitulé du stage' } }) }}
+                            <br /><br />
+                            <p id="err-internshipDescription" class="form-error-msg"></p>
+                            {{ form_label(form.internshipDescription) }}
+                            {{ form_widget(form.internshipDescription, {attr: { class: 'form-control', placeholder: 'Description du stage' } }) }}
+                            <br /><br />
+                            {{ form_label(form.noteInternship) }}
+                            <div class="input-group form-note">
+                                {{ form_widget(form.noteInternship, {'attr': {'class': 'input-num input-note form-control'}}) }}
+                                <span class="input-group-addon"> / 10</span>
+                            </div>
+                            <span id="err-noteInternship" class="form-error-msg top"></span>
+                            <br />
+                            <h3>Avis sur le stage et l'entreprise</h3>
+                            <span class="form-help">Précisez ici votre avis général sur le stage (travail demandé, déroulement, accord avec les compétence de l'UTC, ...)</span>
+                            <p id="err-internshipComment" class="form-error-msg"></p>
+                            {{ form_widget(form.internshipComment, {attr: {
+                                class: 'form-control',
+                                placeholder: 'Avis général sur le stage',
+                                rows: 6
+                            } }) }}
+                            <br />
+                        </div>
+                            
+                    {% endif %}
+
+                        <div class="tab-pane can-disabled" id="tab-housing">
+                            <div class="optional-section">
+                                <span>Cette section est facultative, vous pouvez l'ignorez si vous ne souhaitez pas la remplir.</span>
+                                {{ form_widget(form.housingEnabled, {'attr': {'style': 'display: none;'}}) }}
+                                <button type="button" class="btn btn-warning btn-sm">Ignorer cette section</button>
+                            </div>
+
+                            {{ form_label(form.housingType) }}
+                            {{ form_widget(form.housingType, {'attr': {'class': 'chosen-single'}}) }}
+                            <span id="err-housingType" class="form-error-msg"></span>
+                            <br /><br />
+                            {{ form_label(form.housingRent) }}
+                            <div class="input-group form-rent">
+                                {{ form_widget(form.housingRent, {'attr': {'class': 'input-float input-money form-control'}}) }}
+                                <span class="input-group-addon"> &euro; / mois</span>
+                            </div>
+                            <span id="err-housingRent" class="form-error-msg top"></span>
+                            <br /><br />
+                            {{ form_label(form.noteHousing) }}
+                            <div class="input-group form-note">
+                                {{ form_widget(form.noteHousing, {'attr': {'class': 'input-num input-note form-control'}}) }}
+                                <span class="input-group-addon"> / 10</span>
+                            </div>
+                            <span id="err-noteHousing" class="form-error-msg top"></span>
+                            <br /><br />
+                            <h3>Avis sur le logement</h3>
+                            <span class="form-help">Précisez ici votre avis général sur la qualité du logement (localisation, commodités,...)</span>
+                            <p id="err-housingComment" class="form-error-msg"></p>
+                            {{ form_widget(form.housingComment, {attr: {
+                                class: 'form-control',
+                                placeholder: 'Avis général sur la qualité du logement',
+                                rows: 6
+                            } }) }}
+                            <br />
+                            <h3>Contact de l'organisme</h3>
+                            <span class="form-help">Précisez ici les coordonnées de l'organisme qui vous a fournit le logement.</span>
+
+                            <div class="can-disabled">
+                                <div class="optional-section">
+                                    <span>Cette section est facultative, vous pouvez l'ignorez si vous ne souhaitez pas la remplir.</span>
+                                    {{ form_widget(form.housingContactEnabled, {'attr': {'style': 'display: none;'}}) }}
+                                    <button type="button" class="btn btn-warning btn-sm">Ignorer cette section</button>
+                                </div>
+                                <p id="err-housingOrganization" class="form-error-msg"></p>
+                                {{ form_label(form.housingOrganization) }}
+                                {{ form_widget(form.housingOrganization, {attr: { class: 'form-control form-inline', placeholder: 'Nom de l\'organisme' } }) }}
+                                <br /><br />
+                                <p id="err-housingAdress1" class="form-error-msg"></p>
+                                {{ form_label(form.housingAdress1) }}
+                                {{ form_widget(form.housingAdress1, {attr: { class: 'form-control form-inline', placeholder: 'Adresse de l\'organisme' } }) }}
+                                <br /><br />
+                                <p id="err-housingAdress2" class="form-error-msg"></p>
+                                {{ form_label(form.housingAdress2) }}
+                                {{ form_widget(form.housingAdress2, {attr: { class: 'form-control form-inline', placeholder: 'Complément d\'adresse de l\'organisme' } }) }}
+                                <br /><br />
+                                <p id="err-housingPostalCode" class="form-error-msg"></p>
+                                <p id="err-housingCity" class="form-error-msg"></p>
+                                {{ form_label(form.housingPostalCode) }}
+                                {{ form_widget(form.housingPostalCode, {attr: { class: 'form-control form-inline form-small', placeholder: 'Code postal', style: 'margin-right: 22px;' } }) }}
+
+                                {{ form_label(form.housingCity) }}
+                                {{ form_widget(form.housingCity, {attr: {class: 'form-control form-inline  form-small',  placeholder: 'Ville' } }) }}
+                                <br /><br />
+                                {{ form_label(form.housingCountry) }}
+                                {{ form_widget(form.housingCountry, {'attr': {'class': 'chosen-single-search'}}) }}
+                                <span id="err-housingCountry" class="form-error-msg"></span>
+                                <br /><br />
+                                <p id="err-housingEmail" class="form-error-msg"></p>
+                                {{ form_label(form.housingEmail) }}
+                                {{ form_widget(form.housingEmail, {attr: {class: 'form-control form-inline',  placeholder: 'Email de l\'organisme' } }) }}
+                                <br /><br />
+                                <p id="err-housingPhone" class="form-error-msg"></p>
+                                {{ form_label(form.housingPhone) }}
+                                {{ form_widget(form.housingPhone, {attr: {class: 'form-control form-inline',  placeholder: 'Téléphone de l\'organisme' } }) }}
+                                <br /><br />
+                            </div>
+                        </div>
+
+                        <div class="tab-pane" id="tab-life">
+                            {{ form_label(form.noteLife) }}
+                            <div class="input-group form-note">
+                                {{ form_widget(form.noteLife, {'attr': {'class': 'input-num input-note form-control'}}) }}
+                                <span class="input-group-addon"> / 10</span>
+                            </div>
+                            <span id="err-noteLife" class="form-error-msg top"></span>
+                            <br /><br />
+                            <h3>Avis sur la vie étudiante</h3>
+                            <span class="form-help">Précisez ici votre avis général sur la vie étudiante (sortie, tourisme, festivités,...)</span>
+                            <p id="err-lifeComment" class="form-error-msg"></p>
+                            {{ form_widget(form.lifeComment, {attr: {
+                                class: 'form-control',
+                                placeholder: 'Avis général sur la qualité de la vie étudiante',
+                                rows: 6
+                            } }) }}
+                        </div>
+
+                        <div class="tab-pane can-disabled" id="tab-transport">
+                            <div class="optional-section">
+                                <span>Cette section est facultative, vous pouvez l'ignorez si vous ne souhaitez pas la remplir.</span>
+                                {{ form_widget(form.transportEnabled, {'attr': {'style': 'display: none;'}}) }}
+                                <button type="button" class="btn btn-warning btn-sm">Ignorer cette section</button>
+                            </div>
+                            {{ form_label(form.transportType) }}
+                            {{ form_widget(form.transportType, {'attr': {'class': 'chosen-single'}}) }}
+                            <span id="err-transportType" class="form-error-msg"></span>
+                            <br /><br />
+                            <p id="err-transportCompany" class="form-error-msg"></p>
+                            {{ form_label(form.transportCompany) }}
+                            {{ form_widget(form.transportCompany, {attr: { class: 'form-control form-inline', placeholder: 'Nom de la compagnie de transport' } }) }}
+                            <br /><br />
+                            {{ form_label(form.transportPrice) }}
+                            <div class="input-group form-transport-price">
+                                {{ form_widget(form.transportPrice, {'attr': {'class': 'input-float input-transport-price form-control'}}) }}
+                                <span class="input-group-addon"> &euro; aller-retour</span>
+                            </div>
+                            <span id="err-transportPrice" class="form-error-msg top"></span>
+                            <br /><br />
+                            <h3>Avis sur le transport</h3>
+                            <span class="form-help">Précisez ici votre avis sur le transport et la compagnie</span>
+                            <p id="err-transportComment" class="form-error-msg"></p>
+                            {{ form_widget(form.transportComment, {attr: {
+                                class: 'form-control',
+                                placeholder: 'Avis sur le transport',
+                                rows: 6
+                            } }) }}
+                            <br />
+                            <h3>Commentaire sur les transports sur place</h3>
+                            <span class="form-help">Précisez l'état des transport sur place</span>
+                            <p id="err-transportOnSitel" class="form-error-msg"></p>
+                            {{ form_widget(form.transportOnSite, {attr: {
+                                class: 'form-control',
+                                placeholder: 'Commentaire sur les transport sur place',
+                                rows: 6
+                            } }) }}
+                        </div>
+
+                        <div class="tab-pane" id="tab-final">
+                            {{ form_label(form.noteGeneral) }}
+                            <div class="input-group form-note">
+                                {{ form_widget(form.noteGeneral, {'attr': {'class': 'input-num input-note form-control'}}) }}
+                                <span class="input-group-addon"> / 10</span>
+                            </div>
+                            <span id="err-noteGeneral" class="form-error-msg top"></span>
+                            <br /><br />
+                            <h3>Avis général sur le séjour</h3>
+                            <span class="form-help">Donnez ici votre avis général sur votre séjhour (n'hésitez pas à être précis)</span>
+                            <p id="err-generalComment" class="form-error-msg"></p>
+                            {{ form_widget(form.generalComment, {attr: {
+                                class: 'form-control',
+                                placeholder: 'Avis général sur le séjour',
+                                rows: 6
+                            } }) }}
+                            <br />
+                            <h3>Conseils</h3>
+                            <span class="form-help">Si vous avez des conseils à donner pour les étudiants quant à la préparation de leur séjour, faites le ici.</span>
+                            <p id="err-generalComment" class="form-error-msg"></p>
+                            {{ form_widget(form.generalAdvice, {attr: {
+                                class: 'form-control',
+                                placeholder: 'Conseil sur la préparation du séjour',
+                                rows: 4
+                            } }) }}
+                        </div>
+
+                    </div>
+                </div>
+
+                <div id="edit-btn-ctn">
+                    <span id="opinion-save-status"></span>
+                        {{ form_widget(form.published, {attr: {style: 'display: none' } }) }}
+                        {{ form_widget(form.save, {attr: {class: 'btn btn-default' } }) }}
+                        {{ form_widget(form.publish, {attr: {class: 'btn btn-primary' } }) }}
+                  <!--  <button type="submit" class="btn btn-default" name="save" value="1">Enregistrer</button>
+                    <button type="submit" class="btn btn-primary" name="publish" value="1">Publier</button>-->
+                </div>
+
+            </div>
+        </div>
+        <div id="form_rest" style="display: none;">{{ form_rest(form) }}</div>
+    </form>
+
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/utravelopinion/js/edit.js') }}"></script>
+{% endblock %}

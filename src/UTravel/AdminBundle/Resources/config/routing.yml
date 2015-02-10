@@ -1,0 +1,115 @@
+utravel_admin_homepage:
+    pattern:  /
+    defaults: { _controller: UTravelAdminBundle:Admin:index }
+
+utravel_manage_opinion:
+    pattern: /gerer_avis
+    defaults: { _controller: UTravelAdminBundle:Admin:gererAvis }
+
+
+
+
+utravel_manage_fiche_pays:
+    pattern: /fiche_pays/gestion
+    defaults: { _controller: UTravelAdminBundle:FichePays:gererFichePays }
+
+utravel_delete_fiche_pays:
+    pattern: /fiche_pays/supprimer/{id}
+    defaults: { _controller: UTravelAdminBundle:FichePays:supprimerFiche }
+    requirements:
+        id: \d+
+
+utravel_create_fiche_pays:
+    pattern: /fiche_pays/creation
+    defaults: { _controller: UTravelAdminBundle:FichePays:fichePays }
+
+utravel_update_fiche_pays:
+    pattern: /fiche_pays/modification/{id}
+    defaults: { _controller: UTravelAdminBundle:FichePays:fichePays }
+    requirements:
+        id: \d+
+
+utravel_valid_fiche_pays:
+    pattern: /fiche_pays/validation
+    defaults: { _controller: UTravelAdminBundle:FichePays:validFichePays }
+    requirements:
+        _method: POST
+
+
+
+
+utravel_manage_news:
+    pattern: /actus/gestion
+    defaults: { _controller: UTravelAdminBundle:Actualite:gererActu }
+
+utravel_create_news:
+    pattern: /actus/creation
+    defaults: { _controller: UTravelAdminBundle:Actualite:editActu }
+
+utravel_delete_news:
+    pattern: /actus/suppression/{id}
+    defaults: { _controller: UTravelAdminBundle:Actualite:removeActu }
+    requirements:
+        id: \d+
+
+utravel_update_news:
+    pattern: /actus/modification/{id}
+    defaults: { _controller: UTravelAdminBundle:Actualite:editActu }
+    requirements:
+        id: \d+
+
+utravel_valid_news:
+    pattern: /actus/validation
+    defaults: { _controller: UTravelAdminBundle:Actualite:validActu }
+    requirements:
+        _method: POST
+
+
+
+
+utravel_welcome_carrousel:
+    pattern: /carrousel
+    defaults: { _controller: UTravelAdminBundle:Carrousel:carrouselForm }
+
+utravel_refresh_carrousel:
+    pattern: /carrousel/refresh
+    defaults: { _controller: UTravelAdminBundle:Carrousel:manageCarrousel }
+
+utravel_delete_carrousel:
+    pattern: /carrousel/delete
+    defaults: { _controller: UTravelAdminBundle:Carrousel:manageCarrousel }
+
+
+
+
+utravel_manage_universities:
+    pattern: /universites/gestion
+    defaults: { _controller: UTravelAdminBundle:Universite:gererUniversites }
+
+utravel_change_partnership_universities:
+    pattern: /universites/change/{id}
+    defaults: { _controller: UTravelAdminBundle:Universite:changePartnership }
+    requirements:
+        id: \d+
+
+utravel_delete_universities:
+    pattern: /universites/delete/{id}
+    defaults: { _controller: UTravelAdminBundle:Universite:suppressionUniversite }
+    requirements:
+        id: \d+
+
+utravel_create_universities:
+    pattern: /universites/creation
+    defaults: { _controller: UTravelAdminBundle:Universite:editUniversite }
+
+utravel_update_universities:
+    pattern: /universites/modification/{id}
+    defaults: { _controller: UTravelAdminBundle:Universite:editUniversite }
+    requirements:
+        id: \d+
+
+utravel_valid_universities:
+    pattern: /universites/validation
+    defaults: { _controller: UTravelAdminBundle:Universite:validUniversite }
+    requirements:
+        _method: POST

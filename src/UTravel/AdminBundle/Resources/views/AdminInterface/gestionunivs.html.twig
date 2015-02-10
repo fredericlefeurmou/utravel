@@ -1,0 +1,84 @@
+{% extends 'UTravelAdminBundle::container.html.twig' %}
+
+{% block content %}
+    
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <input type="hidden" id="service" value="{{ id_service }}">
+            <h1 class='text-center'>{{ title }}</h1>
+            <br />
+            <p>
+                Ci-dessous, vous pourrez voir les universités étrangères en base de données.
+                <br />
+                Vous pouvez directement rajouter une nouvelle université partenaire en cliquant sur le bouton directement ci-dessous.
+            </p>
+            <a href="{{ path('utravel_create_universities') }}"><button type="button" class="btn btn-default"><span>Créer une nouvelle université</span></button></a>
+
+            <hr>
+
+            {% if message %}
+            <div class="panel panel-info">
+                <div class="panel-body">
+                    {{ message }}
+                </div>
+            </div>
+            {% endif %}
+
+            <select id="nom_pays" name="nom_pays" class="form-control">
+                <option value="000" label="Tous les pays">Tous les pays</option>
+                {% include 'UTravelOpinionBundle:OpinionSubmit:country_list.html.twig' %}
+            </select>
+            <br>
+
+            <legend>Liste des universités</legend>
+            <table class="table">
+                <thead>
+                    <tr class="entete">
+                        <th class="center" width=5% sens="recent"></th>
+                        <th width=50%>Université</th>
+                        <th width=15% class="center">Partenariat</th>
+                        <th width=15%></th>
+                        <th width=15%></th>
+                    </tr>
+                </thead>
+                <tbody id="tbody">
+                    {% for univ in universites %}
+                    <tr class="{{ univ.country }}">
+                        <td></td>
+                        <td>{{ univ.name }}</td>
+                        <td class="center">
+                            <a href="{{ path('utravel_change_partnership_universities', {'id' : univ.id} ) }}">
+                            {% if univ.partnership %}
+                                <button class="btn btn-warning">Désactiver</button>
+                            {% else %}
+                                <button class="btn btn-success">Activer</button>
+                            {% endif %}
+                            </a>
+                        </td>
+                        <td class="center">
+                            <a href="{{ path('utravel_update_universities', {'id' : univ.id} ) }}"><button class="btn btn-primary">Modifier</button></a>
+                        </td>
+                        <td class="center">
+                            <a href="{{ path('utravel_delete_universities', {'id' : univ.id} ) }}"><button class="btn btn-danger">Supprimer</button></a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            
+            <br />
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript">
+    $("#nom_pays").change(function(){
+        code = $("#nom_pays option:selected").attr("value");
+        $("#tbody").children().each(function(){
+            if ($(this).hasClass(code) || code == "000") { $(this).show(); } else {  $(this).hide(); }
+        });
+    });
+</script>
+{% endblock %}

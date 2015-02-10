@@ -1,0 +1,63 @@
+{% for opinion in opinions %}
+    <div class="opinion-result row">
+        <div class="col-md-7 col-md-offset-1">
+            <h2><a href="{{ path('utravel_display_opinion', {'opinion_id': opinion.getId()}) }}">{{ opinion.getTitle() }}</a></h2>
+            <p class="opinion-comment">
+                {{ opinion.getGeneralComment()|length > 200 ? opinion.getGeneralComment()|slice(0, 200) ~ '...' : opinion.getGeneralComment()  }}
+                <a href="{{ path('utravel_display_opinion', {'opinion_id': opinion.getId()}) }}">Lire la suite</a>
+            </p>
+            <div class="row">
+                <div class="col-md-2">
+                    <strong class="nb-pertinent">{{ opinion.getVotes() | length }}</strong> <i class="fa fa-thumbs-up"></i>
+                </div>
+                
+                <div class="col-md-5">
+                    <i class="fa fa-flask"></i>  
+                    {% if opinion.getBranch() %}
+                         {{ opinion.getBranch() }} 
+                    {% else %}
+                        Tronc commun
+                    {% endif %}
+                    {% if opinion.getSpecialization() %}
+                        ({{ opinion.getSpecialization() }})
+                    {% endif %}
+                </div>
+                
+                <div class="col-md-5">
+                    <i class="fa fa-globe"></i>  {{ opinion.getLocalCountry() }}
+                    -
+                    {{ opinion.getCity() }}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <strong class="text-center" style="display: block; margin-bottom: 11px;">
+                {%  if opinion.journeyType == 1 or opinion.journeyType == 2 %}
+                    <i class="fa fa-graduation-cap"></i> 
+                {% elseif opinion.journeyType == 3 %}
+                    <i class="fa fa-briefcase"></i>
+                {% else %}
+                    <i class="fa fa-sun-o"></i>
+                {% endif %} 
+                {{ opinion.getTypeAsString() }}
+            </strong>
+                
+            <div  class="well well-sm">
+                <strong><span class="note-label">Général : </span></strong> <span class="note-part">{{ opinion.getNoteGeneral() }} / 10</span>
+                <br />
+                {% if opinion.journeyType == 1 or opinion.journeyType == 2 %}
+                    <span class="note-label">Etude : </span> <span class="note-part">{{ opinion.getNoteStudying() }} / 10</span>
+                    <br />
+                {% elseif opinion.journeyType == 3 %}
+                    <span class="note-label">Stage : </span> <span class="note-part">{{ opinion.getNoteInternship() }} / 10</span>
+                    <br />
+                {% endif %} 
+               {% if opinion.getHousingEnabled() %}
+                    <span class="note-label">Logement : </span> <span class="note-part">{{ opinion.getNoteHousing() }} / 10</span>
+                    <br />
+               {% endif %}
+                <span class="note-label">Vie étudiante : </span> <span class="note-part">{{ opinion.getNoteLife() }} / 10</span>
+            </div>
+        </div>
+    </div>
+{% endfor %}

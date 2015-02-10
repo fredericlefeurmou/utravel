@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset={{ _charset }}"/>
+        <meta name="robots" content="noindex,nofollow" />
+        <title>UTravel - Administration : {{ title }}</title>
+        <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+        <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="//cdn.jsdelivr.net/chosen/1.1.0/chosen.min.css">
+        <link href="{{ asset('bundles/utraveladmin/css/main.css') }}" rel="stylesheet" type="text/css" media="all" />
+        <link href="{{ asset('bundles/utraveladmin/css/custom.css') }}" rel="stylesheet" type="text/css" media="all" />
+        <link href="{{ asset('bundles/utraveladmin/css/navbar_style.css') }}" rel="stylesheet" type="text/css" media="all" />
+        <link href="{{ asset('bundles/utraveladmin/css/admin.css') }}" rel="stylesheet" type="text/css" media="all" />
+        {% block head %}{% endblock %}
+
+    </head>
+    <body>
+
+        <header>
+            <nav id="navhead" class="navbar navbar-default" role="navigation" >
+                <div class="container-fluid">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+
+                        <a class="navbar-brand" href="{{ path('utravel_opinion_homepage') }}">
+                            {% image '@UTravelOpinionBundle/Resources/public/images/logo_utravel1.png' %}
+                            <img src="{{ asset_url }}" alt="UTravel Logo" width="80px"/>
+                            {% endimage %}
+                        </a>
+                    </div>
+
+                        <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse">
+                        <ul class="nav navbar-nav nav-pills">
+                            <li id="accueil"><a href="{{ path('utravel_opinion_homepage') }}">Accueil</a></li>
+                            <li id="avis">
+                                <a href="#">Avis</a>
+                                <div id="opinion-menu" class="container">
+                                    <div id="depot" class="pull-left">
+                                        <img src="{{ asset('bundles/utravelopinion/images/icon_depot.png') }}" />
+                                        <a id="depot-button" href="{{ path('utravel_new_opinion') }}" class="btn">Déposer avis</a>
+                                    </div>
+                                    <h3 id="consulter">Consulter les avis</h3>
+                                    <div id="menu">
+                                        <ul id="menu-type">
+                                            <li><a href="#">Semestre d'études</a></li>
+                                            <li><a href="#">Stage</a></li>
+                                            <li><a href="#">Double diplôme</a></li>
+                                            <li><a href="#">Césure</a></li>
+                                        </ul>
+                                        <ul id="menu-periode">
+                                            <li><a href="#">A2013</a></li>
+                                            <li><a href="#">P2013</a></li>
+                                            <li><a href="#">A2012</a></li>
+                                            <li><a href="#">P2012</a></li>
+                                        </ul>
+                                        <ul id="menu-pays">
+                                            <li><a href="#">Espagne</a></li>
+                                            <li><a href="#">Pérou</a></li>
+                                            <li><a href="#">Etats-Unis</a></li>
+                                            <li><a href="#">Suède</a></li>
+                                        </ul>
+                                    </div>
+                                    <div id="search">
+                                        <a href="#">
+                                            <img src="{{ asset('bundles/utravelopinion/images/icon_search.png') }}" />
+                                             Plus de critères
+                                        </a>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <a href="#">Informations</a>
+                                    <div id="informations" class="container">
+                                        <ul id="menu-info">
+                                        <li id="actus">
+                                            <a href="{{ path('utravel_actualites', { 'section': '' }) }}" target="_top">Actualités</a>
+                                        </li>
+                                        <li id="fiches">
+                                            <a href="{{ path('utravel_fiche_pays') }}" target="_top">Fiches pays</a>
+                                        </li>
+                                        <li id="universites">
+                                            <a href="{{ path('utravel_consult_universites') }}" target="_top">Universités</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                            <li class="active"><a href="{{ path('utravel_admin_homepage') }}" target="_top">Administration</a></li>
+                    </ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+                    {% if app.session.get('user_login_U7E2R') %}
+                        <li><a id="connexion-button2" href="#" target="_top">{{ app.session.get('user_login_U7E2R') }}</a></li>
+                        <li><a id="connexion-button" href="{{ path('utravel_logout') }}" target="_top">Déconnexion</a></li>
+                    {% else %}
+                        <li><a id="connexion-button" href="{{ path('utravel_login') }}" target="_top">Connexion</a></li>
+                    {% endif %}
+                    </ul>
+                </div>
+            </nav>
+
+            <div class="subnavbar">
+                <div class="subnavbar-inner">
+                    <div class="container">
+                        <ul class="mainnav">
+                            <li>
+                                <a href="{{ path('utravel_manage_opinion') }}"><i class="fa fa-comments-o"></i><span>Gestion des avis</span></a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-globe"></i><span>Fiches pays</span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="{{ path('utravel_manage_fiche_pays') }}">Gestion des fiches</a></li>
+                                    <li><a href="{{ path('utravel_create_fiche_pays') }}">Nouvelle fiche</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-list-alt"></i><span>Actualités</span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="{{ path('utravel_manage_news') }}">Gestion des actualités</a></li>
+                                    <li><a href="{{ path('utravel_create_news') }}">Nouvelle actualité</a></li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="{{ path('utravel_welcome_carrousel') }}"><i class="fa fa-image"></i><span>Carrousel</span></a>
+                            </li>
+                            <li class="dropdown">
+                                <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-mortar-board"></i><span>Universités</span></a>
+                                <ul class="dropdown-menu">
+                                    <li><a href="{{ path('utravel_manage_universities') }}">Gestion des universités</a></li>
+                                    <li><a href="{{ path('utravel_create_universities') }}">Nouvelle université</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </header>
+
+        <main>
+        {% block content %}{% endblock %}
+        </main>
+
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+        <script src="//cdn.jsdelivr.net/chosen/1.1.0/chosen.jquery.min.js"></script>
+        <script src="{{ asset('bundles/utraveladmin/js/admin_script.js') }}"></script>
+        <script src="{{ asset('bundles/utraveladmin/js/bootstrap-filestyle.min.js') }}"></script>
+        {% block scripts %}{% endblock %}
+    </body>
+</html>
+

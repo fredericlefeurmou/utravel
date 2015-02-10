@@ -1,0 +1,315 @@
+.navbar-default li:hover { background: #ddd; }
+
+
+.navbar-nav.navbar-right:last-child { margin-right: 0px; }
+
+.chosen-container-single .chosen-single { height: 28px; background-color: white;}
+/** added by Abdoul**/
+
+
+/** added by Abdoul**/
+
+.tabs-left > .nav-tabs {
+  border-bottom: 0;
+}
+
+.tab-content > .tab-pane,
+.pill-content > .pill-pane {
+  display: none;
+}
+
+.tab-content > .active,
+.pill-content > .active {
+  display: block;
+}
+
+.tabs-below > .nav-tabs {
+  border-top: 1px solid #ddd;
+}
+
+
+.tabs-left > .nav-tabs > li {
+  float: none;
+  width: 150px;
+}
+
+.tabs-left > .nav-tabs > li > a {
+  min-width: 74px;
+  margin-right: 0;
+  margin-bottom: 3px;
+}
+
+.tabs-left > .nav-tabs {
+  float: left;
+  margin-right: 19px;
+  border-right: 1px solid #ddd;
+}
+
+.tabs-left > .nav-tabs > li > a {
+  margin-right: -1px;
+  -webkit-border-radius: 4px 0 0 4px;
+     -moz-border-radius: 4px 0 0 4px;
+          border-radius: 4px 0 0 4px;
+}
+
+.tabs-left > .nav-tabs > li > a:hover,
+.tabs-left > .nav-tabs > li > a:focus {
+  border-color: #eeeeee #dddddd #eeeeee #eeeeee;
+}
+
+.tabs-left > .nav-tabs .active > a,
+.tabs-left > .nav-tabs .active > a:hover,
+.tabs-left > .nav-tabs .active > a:focus {
+  border-color: #ddd transparent #ddd #ddd;
+  border-right-color: #ffffff;
+}
+
+#edit-opinion label { width: 150px; vertical-align: bottom; }
+#edit-opinion label.big { width: 450px; }
+#edit-opinion .chosen-container-single { min-width: 180px; max-width: 180px; }
+
+.form-help { font-size: 11px; color: gray; vertical-align: super; }
+
+.form-note { width: 106px; padding: 1px; height: 24px; display: inline-table; top: 6px; }
+
+.form-ok { background: #00FF15; border-radius: 5px; box-shadow: 0 0 5px #fff inset,0 1px 1px rgba(0,0,0,.1);}
+.form-error { background: #FF1500; border-radius: 5px; box-shadow: 0 0 5px #fff inset,0 1px 1px rgba(0,0,0,.1);}
+.badge-error { float: right; background: #CC0000; }
+
+#edit-opinion .container-fluid { margin-top: 10px; height: 30px; }
+#edit-opinion .row > div { padding-left: 5px; padding-right: 5px; }
+#edit-opinion .course-div input[type=text], #edit-opinion .form-inline button { height: 30px; width: 100%; }
+.course-model { display: none; }
+#add-course { margin-top: 10px; display: block; }
+#edit-opinion > .tab-pane { margin-left: 150px; padding-left: 20px; border-left: 1px solid #ddd; min-height: 270px; }
+#edit-btn-ctn { margin-top: 25px; text-align: right; border-top: 1px solid #DDD; width: 725px; margin-left: auto; padding: 15px; }
+#edit-btn-ctn button { margin-right: 20px; }
+#opinion-save-status { margin-right: 20px; color: #888; vertical-align: sub; }
+
+.chosen-container .chosen-results li.group-result { display: none; }
+.chosen-container .chosen-results li.group-option { padding-left: 6px; }
+input::-webkit-outer-spin-button,input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.form-control.inline-texarea { width: 100%; height: 30px; }
+.optional-section span { font-size: 11px; color: orange; }
+.optional-section { border: 1px dashed orange; padding: 6px 6px 16px 6px; margin-bottom: 20px; vertical-align: bottom; }
+.optional-section .btn { float: right; }
+
+.form-rent { width: 146px; padding: 1px; height: 24px; display: inline-table; top: 6px; }
+input[type=text].form-inline, input[type=email].form-inline { width: 570px; display: inline-table; }
+input[type=text].form-inline.form-small { width: 150px; }
+.form-transport-price { width: 196px; padding: 1px; height: 24px; display: inline-table; top: 6px; }
+.disabled { color: #BBB; }
+.form-error-msg { display: none; color: #F44; background: #FDD; border: 1px solid #F66; padding: 5px 10px; }
+#global-errors { display: none; background: #FDD; padding: 5px 20px; border-radius: 10px; color: #F11; font-size: 15px; }
+span.form-error-msg { margin: 15px; position: relative; }
+span.form-error-msg.top { top: -5px }
+
+
+/** added by abdoul **/
+#edit-opinion .chosen-container-single .chosen-single, #journey_type_chosen .chosen-single {
+    background: -moz-linear-gradient(white, white, white);
+    background: -webkit-linear-gradient(white, white, white);
+    background:  linear-gradient(white, white, white);
+    background: -o-linear-gradient(white, white, white);
+    height: 28px;
+}
+
+#edit-opinion .chosen-container .chosen-results li.highlighted, 
+#form_country_chosen .chosen-drop .chosen-results li.highlighted,
+#journey_type_chosen .chosen-drop .chosen-results li.highlighted {
+    background-color: rgb(0, 102, 102);
+    background-image: linear-gradient(#006666, #006666, #006666);
+    background-image: -moz-linear-gradient(#006666, #006666, #006666);
+    background-image: -o-linear-gradient(#006666, #006666, #006666);
+    background-image: -webkit-linear-gradient(#006666, #006666, #006666);
+    color: #FFFFFF;
+}
+
+#edit-opinion .input-group-addon, #edit-opinion .form-control {
+    border-radius: 0px;
+}
+
+#edit-opinion .form-control:focus, #edit-opinion .chosen-container-active .chosen-single{
+    border-color: rgba(0, 102, 102, 0.8);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0) inset, 0 0 5px rgba(0, 102, 102, 0.1);
+}
+
+#tab-menu li a {
+    color: rgba(0, 102, 102, 0.7);
+    text-decoration: none;
+}
+
+#tab-menu li a:hover {
+    color: rgba(255, 255, 255, 0.7);
+    background-color: rgba(0, 102, 102, 1);
+}
+
+#tab-menu .active a {
+    color: #003232;/**vert foncé**/
+    text-decoration: none;
+}
+
+#tab-menu .active a:hover {
+    background-color: rgba(0, 102, 102, 0);
+    color: #003232;/**vert foncé**/
+}
+
+#opinion-quick-nav { display: inline-block; }
+#link-return-list { display: inline-block; margin: 15px 50px 0px 15px; }
+#general-info { text-align: center; float: right;  padding-right: 8.33%; }
+#general-info .well h4 { text-align: center; }
+#general-info .well { margin-right: 10px; text-align: left; }
+
+.note-part { font-weight: bold; position: absolute; left: 150px; }
+.housing-value { font-weight: bold; position: absolute; left: 150px; }
+
+.transport-value { font-weight: bold; position: absolute; left: 80px; }
+.transport-center-value { font-weight: bold; position: absolute; left: 350px; }
+
+#opinion-content { padding: 0px 40px; }
+.opinion-comment { text-align: justify; }
+h1 { margin-bottom: 30px; }
+h2 { margin-bottom: 30px; margin-top: 50px; }
+.quick-nav-top { position: fixed; top: 5px; left: 25%; background: white; z-index: 100; border: 1px solid #DDD; }
+
+
+#conteneur #journey_type_chosen.chosen-container-active > a.chosen-single {
+    border: 1px solid rgba(0, 102, 102, 0.8);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0);
+}
+
+.multiselect { width: 160px; }
+.multiselect .caret { position: relative; float: right; top: 9px; }
+.specialization-div-search { display: inline-block; }
+#form-search .row { margin-bottom: 10px; }
+#form-search { width: 800px; margin: auto; }
+#form-search .chosen-multiple-search { width: 195px; }
+#form-search .chosen-container-multi { min-height: 34px; }
+
+/*#form-search .chosen-container-multi .chosen-choices { padding-top: 6px; }*/
+
+.link-prev-page { visibility: hidden; float: left; }
+.link-next-page { visibility: hidden; float: right; }
+
+#main-search { margin: 25px 30px 10px 30px; }
+.search-pagin { height: 40px; border-bottom: 1px solid #DDD; border-top: 1px solid #DDD; margin: 0px 30px; padding-top: 10px; }
+.page-nb { text-align: center; }
+
+.opinion-result { padding: 15px 0px 5px 0px; border-bottom: 1px solid #DDD; }
+div .opinion-result:last-child { border-bottom: none;  }
+.opinion-result h2 { margin-top: 0px; margin-bottom: 10px; }
+.opinion-result h2 a { color: #333; }
+
+.account-div { padding: 0px 60px; }
+
+.account-info { border: 1px solid #DDD; border-radius: 20px; padding-bottom: 40px; }
+.account-info label { width: 150px; }
+.account-info h2 { margin-top: 25px; text-align: center; }
+
+#edit-mail-action img { display: none; }
+
+#form-search .btn-group.open .dropdown-toggle {
+    box-shadow: none;
+}
+
+#form-search .open .dropdown-toggle.btn-default {
+    background-color: #006666;
+    border-color: #adadad;
+    color: #fff;
+}
+
+#form-search .btn-default {
+    background-color: rgb(255, 255, 255);
+    border-color: rgb(204, 204, 204);
+    color: #006666;
+}
+
+#form-search .dropdown-menu > .active > a,
+#form-search .dropdown-menu > .active > a:hover,
+#form-search .dropdown-menu > .active > a:focus {
+    color: #FFF;
+    text-decoration: none;
+    outline: 0px none;
+    background-color: rgba(0, 102, 102, 0.71);
+}
+
+#form-search .btn:active, .btn.active {
+    outline: 0px none;
+    background-image: none;
+    box-shadow: 0px 3px 5px rgba(0, 0, 0, 0) inset;
+}
+
+#form-search .chosen-container-multi .chosen-choices {    
+    background-image:           linear-gradient(#FFF 100%, #FFF 100%); 
+    background-image:      -moz-linear-gradient(#FFF 100%, #FFF 100%); 
+    background-image:   -webkit-linear-gradient(#FFF 100%, #FFF 100%); 
+    background-image:       -o-linear-gradient(#FFF 100%, #FFF 100%);
+    background-image: -ms-linear-gradient(#FFF 100%, #FFF 100%); 
+}
+
+#form-search .dropdown-menu{
+    background-color: #FFF;
+    border: 1px solid rgba(0, 102, 102, 0.5);
+    border-radius: 0px;
+    box-shadow: 0px 6px 12px rgba(0, 0, 0, 0);
+    background-clip: padding-box;
+}
+
+#form-search .chosen-container {
+    font-size: 14px;
+}
+
+#form-search > li.search-choice {
+    font-size: 14px;
+}
+
+.opinion-comment a {
+    text-decoration: none;
+    color: rgba(255,51,0, 1);
+}
+
+.opinion-comment a:hover {
+    color: rgba(255,51,0, 0.8);
+    text-decoration: underline;
+}
+.vote-login, .vote-status { display: none; }
+
+#opinion-quick-nav .nav-pills > li.active > a, #opinion-quick-nav .nav-pills > li.active > a:hover, 
+#opinion-quick-nav .nav-pills > li.active > a:focus {
+    color: white;
+    background-color: rgb(0,102,102);
+    /*border-bottom: rgb(255,51,0) solid 4px;*/
+    font-weight: bold;
+}
+
+#opinion-quick-nav .nav > li > a, 
+#opinion-quick-nav .nav > li > a {
+    text-decoration: none;
+    background-color: white;
+/*    border-bottom: rgb(255,255,255) solid 4px;*/
+    color: #066;
+}
+
+#opinion-quick-nav .nav > li > a:hover, 
+#opinion-quick-nav .nav > li > a:focus {
+    text-decoration: none;
+    background-color: rgb(0,102,102);
+/*    border-bottom: rgb(0,102,102) solid 4px;*/
+    color: white;
+}
+
+#link-return-list, a.thumbs-up.vote-link , #account a{
+    color: #066;
+}
+
+#account #delete-opinion {
+    color: rgb(255,51,0);
+}
+
+#account #delete-opinion:hover {
+    color: rgba(255,51,0, 0.8);    
+}
+
+input[type=number] {
+    -moz-appearance:textfield;
+}

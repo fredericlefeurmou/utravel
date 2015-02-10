@@ -1,0 +1,84 @@
+{% extends 'UTravelAdminBundle::container.html.twig' %}
+
+{% block content %}
+    
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <input type="hidden" id="service" value="{{ id_service }}">
+            <h1 class='text-center'>{{ title }}</h1>
+            <br>
+            <p>
+                Maintenez ici les ressources du site. Plusieurs fonctionnalités s'offrent à vous : choisissez l'une d'entre elles.
+                <br /><br />
+                <strong>Note : Vous pouvez revenir sur cette interface en cliquant sur le bouton "Administration" du menu principal.</strong>
+            </p>
+            <div class="row">
+                <div class="col-md-6">
+                    <a href="{{ path('utravel_manage_opinion') }}">
+                        <button type="button" class="btn btn-default col-xs-12">
+                            <i class="fa fa-comments-o"></i><span>  Gestion des avis</span>
+                        </button>
+                    </a>
+                </div>
+                <div class="col-md-6">
+                    <a href="{{ path('utravel_welcome_carrousel') }}">
+                        <button type="button" class="btn btn-default col-xs-12">
+                            <i class="fa fa-image"></i><span>  Modification de la page d'accueil</span>
+                        </button>
+                    </a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <a href="{{ path('utravel_create_fiche_pays') }}">
+                        <button type="button" class="btn btn-default col-xs-12">
+                            <i class="fa fa-globe"></i><span>  Création d'une fiche pays</span>
+                        </button>
+                    </a>
+                </div>
+                <div class="col-md-6">
+                    <a href="{{ path('utravel_manage_fiche_pays') }}">
+                        <button type="button" class="btn btn-default col-xs-12">
+                            <i class="fa fa-globe"></i><span>  Gestion des fiches pays</span>
+                        </button>
+                    </a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <a href="{{ path('utravel_create_news') }}">
+                        <button type="button" class="btn btn-default col-xs-12">
+                            <i class="fa fa-list-alt"></i><span>  Création d'une actulité</span>
+                        </button>
+                    </a>
+                </div>
+                <div class="col-md-6">
+                    <a href="{{ path('utravel_manage_news') }}">
+                        <button type="button" class="btn btn-default col-xs-12">
+                            <i class="fa fa-list-alt"></i><span>  Gestion des actualités</span>
+                        </button>
+                    </a>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <a href="{{ path('utravel_create_universities') }}">
+                        <button type="button" class="btn btn-default col-xs-12">
+                            <i class="fa fa-mortar-board"></i><span>  Création d'une université</span>
+                        </button>
+                    </a>
+                </div>
+                <div class="col-md-6">
+                    <a href="{{ path('utravel_manage_universities') }}">
+                        <button type="button" class="btn btn-default col-xs-12">
+                            <i class="fa fa-mortar-board"></i><span>  Gestion des universités</span>
+                        </button>
+                    </a>
+                </div>
+            </div>
+            
+            <br />
+        </div>
+    </div>
+
+{% endblock %}

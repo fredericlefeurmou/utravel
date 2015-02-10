@@ -1,0 +1,9 @@
+parameters:
+#    u_travel_u_travel.example.class: UTravel\UTravelBundle\Example
+
+services:
+#    u_travel_u_travel.example:
+#        class: %u_travel_u_travel.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
+    fiche_pays_controller:
+        class: UTravel\AdminBundle\Controller\FichePaysController

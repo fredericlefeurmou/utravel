@@ -1,0 +1,53 @@
+{% extends 'UTravelAdminBundle::container.html.twig' %}
+
+{% block content %}
+    
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <input type="hidden" id="service" value="{{ id_service }}">
+            <h1 class='text-center'>{{ title }}</h1>
+            <br />
+            <p>
+                Ci-dessous, vous pourrez voir les actualités que vous avez déjà publiées.
+                <br />
+                Vous pouvez directement créer une nouvelle actualité pays en cliquant sur le bouton directement ci-dessous.
+            </p>
+            <a href="{{ path('utravel_create_news') }}"><button type="button" class="btn btn-default"><span>Créer une nouvelle actualité</span></button></a>
+
+            <hr>
+
+            {% if message %}
+            <div class="panel panel-info">
+                <div class="panel-body">
+                    {{ message }}
+                </div>
+            </div>
+            {% endif %}
+            
+            <legend>Fil d'actualités</legend>
+            <table class="table">
+                <thead>
+                    <tr class="entete">
+                        <th class="center" width=20% sens="recent"></th>
+                        <th width=50%>Récent >> Ancien</th>
+                        <th width=15%></th>
+                        <th width=15%></th>
+                    </tr>
+                </thead>
+                <tbody id="tbody">
+                    {% for actu in actus %}
+                        <tr>
+                            <td class="center"><a href="{{ path('utravel_consult_actu', {'id' : actu.id }) }}" target="_blank"><button type="button" class="btn btn-info btn-sm">Consulter</button></a></td>
+                            <td>{{ actu.titre }}</td>
+                            <td class="center"><a href="{{ path('utravel_update_news', {'id' : actu.id }) }}"><button type="button" class="btn btn-primary btn-sm">Modifier</button></a></td>
+                            <td class="center"><a href="{{ path('utravel_delete_news', {'id' : actu.id }) }}"><button type="button" class="btn btn-danger btn-sm">Supprimer</button></a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            
+            <br />
+        </div>
+    </div>
+
+{% endblock %}

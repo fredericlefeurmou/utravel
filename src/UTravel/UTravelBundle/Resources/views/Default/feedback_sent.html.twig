@@ -1,0 +1,42 @@
+{% extends 'UTravelOpinionBundle::layout.html.twig' %}
+
+{% block title %}UTravel : Aidez-nous à nous améliorer{% endblock %}
+
+{% block head %}
+    <link href="{{ asset('bundles/utravelopinion/css/custom.css') }}" rel="stylesheet" type="text/css" media="all" />
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <style>
+        .panel { border-color: #066; }
+        .panel-default > .panel-heading, thead { background-color: #066; color : #FFF; }
+        .univ-link .panel-body { text-decoration:none; color:black; }
+        .content { padding-left:15px; }
+        .center { text-align: center; }
+        .btn-visit { background-color: #f30; color: #fff; border: 0px; }
+        .btn-visit:hover { background-color: rgba(255, 41, 0, 0.8); color: #fff; }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <h1 class='text-center'>Aidez-nous à nous améliorer</h1>
+            <br />
+
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <p>
+                        Votre message a bien ete envoye
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $('.active').removeClass();
+     </script>
+{% endblock %}

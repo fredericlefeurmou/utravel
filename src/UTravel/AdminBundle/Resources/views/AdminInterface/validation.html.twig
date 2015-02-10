@@ -1,0 +1,55 @@
+{% extends 'UTravelAdminBundle::container.html.twig' %}
+
+{% block content %}
+    
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <input type="hidden" id="service" value="{{ id_service }}">
+            <h1 class='text-center'>{{ title }}</h1>
+            <br />
+            {% if success %}
+                {% if id_service == 1 %}
+                    <p>
+                        La fiche pays a été enregistrée avec succès. Vous pouvez continuer vos activités d'administrateur si vous le souhaitez.
+                    </p>
+                {% elseif id_service == 2 %}
+                    <p>
+                        L'actualité a été enregistrée avec succès. Vous pouvez continuer vos activités d'administrateur si vous le souhaitez.
+                    </p>
+                {% elseif id_service == 3 %}
+                    <p>
+                        Le carroussel a bien été mis à jour. Vous pouvez continuer vos activités d'administrateur si vous le souhaitez.
+                    </p>
+                {% elseif id_service == 4 %}
+                    <p>
+                        L'université a été enregistrée avec succès. Vous pouvez continuer vos activités d'administrateur si vous le souhaitez.
+                    </p>
+                {% endif %}
+            {% else %}
+                {% if id_service == 1 %}  
+                    <p>
+                        La fiche pays n'a pas été enregistré.</br>
+                        Raison : {{ err_msg }}
+                    </p>
+                {% elseif id_service == 2 %} 
+                    <p>
+                        L'actualité n'a pas été enregistrée.</br>
+                        Raison : {{ err_msg }}
+                    </p>
+                {% elseif id_service == 3 %}
+                    <p>
+                        Le carrousel n'a pas pu être mis à jour.</br>
+                        Raison : {{ err_msg }}
+                    </p>
+                {% elseif id_service == 4 %}
+                    <p>
+                        L'université n'a pas été enregistrée.</br>
+                        Raison : {{ err_msg }}Un champ n'a pas été renseigné
+                    </p>
+                {% endif %}
+            {% endif %}
+            <br />
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,48 @@
+utravel_login:
+    pattern:  /login
+    defaults: { _controller: UTravelUTravelBundle:UTravel:login }
+
+sf_login:
+    pattern: /sflogin
+
+utravel_logout:
+    pattern:  /logout
+    defaults: { _controller: UTravelUTravelBundle:UTravel:logout }
+
+
+
+utravel_fiche_pays:
+    pattern:  /fiches_pays
+    defaults: { _controller: UTravelUTravelBundle:Infos:fichesPays }
+
+utravel_consult_fiche:
+    pattern:  /fiche_{pays}
+    defaults: { _controller: UTravelUTravelBundle:Infos:consultFiche }
+    requirements:
+        method: _GET
+
+utravel_actualites:
+    pattern: /actualites/{section}
+    defaults: { _controller: UTravelUTravelBundle:Infos:actualites }
+    requirements:
+        section: \d*
+
+utravel_consult_actu:
+    pattern: /actualite/{id}
+    defaults: { _controller: UTravelUTravelBundle:Infos:consultActu }
+
+utravel_consult_universites:
+    pattern: /universites
+    defaults: { _controller: UTravelUTravelBundle:Infos:consultUniversites }
+
+
+
+utravel_feedback:
+    pattern : /feedback
+    defaults: { _controller: UTravelUTravelBundle:Infos:feedbackForm }
+
+utravel_feedback_sent:
+    pattern: /feedback_sent
+    defaults: { _controller: UTravelUTravelBundle:Infos:sendFeedback }
+    requirements:
+        method: _POST

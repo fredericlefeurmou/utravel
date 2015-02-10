@@ -1,0 +1,62 @@
+{% extends 'UTravelAdminBundle::container.html.twig' %}
+
+{% block head %}
+
+<script src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
+<script>tinymce.init({selector:'textarea', menubar : false, statusbar : false});</script>
+
+{% endblock %}
+
+{% block content %}
+    
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <input type="hidden" id="service" value="{{ id_service }}">
+            <h1 class='text-center'>{{ title }}</h1>
+            <br />
+            <div class="form-help center">Tous les champs sont obligatoires{% if id_actu > 0 %}, sauf l'illustration. Une nouvelle image signifie une modification de l'image pour l'actualité à modifier{% endif %}.</div>
+            <br/>
+            <form action="{{ path('utravel_valid_news') }}" method="post" enctype="multipart/form-data" id="form_actu">
+                <input type="hidden" name="id_actu" value="{{ id_actu }}">
+
+                <div class="form-group" id="illustration_div">
+                    <label for="illustration" class="control-label">Illustration de l'actualité :</label>
+                    <input type="file" name="illustration" class="filestyle">
+                </div>
+                {% if champs.image %}
+                <div class="form-group form-help">
+                    Image choisie comme illustration : {{ champs.image }}
+                </div>
+                {% endif %}
+
+                <div class="form-group" id="titre_div">
+                    <label for="titre" class="control-label">Titre : </label>
+                    <input name="titre" type="text" class="form-control" value="{{ champs.titre }}">
+                </div>
+
+                <div class="form-group" id="description_div">
+                    <label for="description" class="control-label">Description :</label>
+                    <textarea name="description" class="form-control" rows="12">
+                        {{ champs.desc }}
+                    </textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-valid" id="edit_actu">
+                    <i class="fa fa-share"></i>
+                    {% if id_actu > 0 %}
+                    <span>  Modifier</span>
+                    {% else %}
+                    <span>  Créer</span>
+                    {% endif %}
+                </button>
+
+            </form>
+            <br />
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block scripts %}
+    <script src="{{ asset('bundles/utraveladmin/js/actualites.js') }}"></script>
+{% endblock %}

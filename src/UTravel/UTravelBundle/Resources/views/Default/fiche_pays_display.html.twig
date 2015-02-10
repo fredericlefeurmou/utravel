@@ -1,0 +1,260 @@
+{% extends 'UTravelOpinionBundle::layout.html.twig' %}
+
+{% block title %}UTravel : Fiche pays - {{ values.nom }}{% endblock %}
+
+{% block head %}
+    <link href="{{ asset('bundles/utravelopinion/css/custom.css') }}" rel="stylesheet" type="text/css" media="all" />
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="{{ asset('bundles/utravelutravel/css/infos.css') }}" rel="stylesheet" type="text/css" media="all" />
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="panel panel-default" style="border: 0px;min-height:100px;">
+                <div class="panel-body">
+                    {% if values.drapeau %}
+                    <img src="{{ asset('uploads/drapeaux/' ~ values.drapeau) }}" height=120/>
+                    {% endif %}
+                    <h1 style="float:right;font-size:50px;">{{ values.nom }}</h1>
+                </div>
+            </div>
+
+            {# Informations générales #}
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Informations générales</h3>
+                </div>
+                <div class="panel-body">
+                    {% if values.capitale %}<p>Capitale : {{ values.capitale }}</p>{% endif %}
+                    {% if values.langue %}<p>Langue officielle : {{ values.langue }}</p>{% endif %}
+                    {% if values.area %}<p>Superficie : {{ values.area }} km²</p>{% endif %}
+                    {% if values.pop %}<p>Population : {{ values.pop }} hab.</p>{% endif %}
+                    {% if values.chef_etat %}<p>Chef d'Etat : {{ values.chef_etat }}</p>{% endif %}
+                    {% if values.jour_nat %}<p>Jour national : {{ values.jour_nat }}</p>{% endif %}
+                    {% if values.monnaie %}<p>Monnaie : {{ values.monnaie }}
+                        {% if values.monnaie %}(1.00 € = {{ values.taux }}){% endif %}
+                    </p>{% endif %}
+                </div>
+            </div>
+
+            {# Numéros utiles #}
+
+            {% if (values.numeros.police) or (values.numeros.urgences) or (values.numeros.pompiers) %}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Numéros utiles</h3>
+                </div>
+                <div class="panel-body">
+                    {% if values.numeros.police %}<p>Police : {{ values.numeros.police }}</p>{% endif %}
+                    {% if values.numeros.urgences %}<p>Urgences : {{ values.numeros.urgences }}</p>{% endif %}
+                    {% if values.numeros.pompiers %}<p>Pompiers : {{ values.numeros.pompiers }}</p>{% endif %}
+                </div>
+            </div>
+            {% endif %}
+
+            {# Ambassades et consulats #}
+
+            {% if (values.consulats|length != 0) or (values.ambassade.ville) %}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Ambassades et consulats</h3>
+                </div>
+                <div class="panel-body">
+                    {% if values.ambassade.ville %}
+                    <div class="panel panel-default">
+                        <div class="panel-heading" style="background-color : #ff3300;">
+                            <h3 class="panel-title">Ambassade nationale à {{ values.ambassade.ville }}</h3>
+                        </div>
+                        <div class="panel-body">
+                            {% if values.ambassade.adr %}
+                                <p>Adresse : {{ values.ambassade.adr }}
+                                {% if values.ambassade.cp %}(code postal : {{ values.ambassade.cp }}){% endif %}</p>
+                            {% endif %}
+                            {% if values.ambassade.tel %}<p>Téléphone : {{ values.ambassade.tel }}</p>{% endif %}
+                            {% if values.ambassade.url %}<p>Site web : {{ values.ambassade.url }}</p>{% endif %}
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    {% for consulat in values.consulats %}
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            {% if consulat.ville %}<p class="souligne">Consulat de France à {{ consulat.ville }} :</p>{% endif %}
+                            {% if consulat.adr %}
+                                <p>Adresse : {{ consulat.adr }}
+                                {% if consulat.cp %}(code postal : {{ consulat.cp }}){% endif %}</p>
+                            {% endif %}
+                            {% if consulat.tel %}<p>Téléphone : {{ consulat.tel }}</p>{% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            {# Campus France #}
+
+            {% if values.campus.ville %}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Campus France</h3>
+                </div>
+                <div class="panel-body">
+                    <p>Adresse du siège :
+                        {% if values.campus.adr %}{{ values.campus.adr }}, {% endif %}
+                        {% if values.campus.adr %}({{ values.campus.cp }}) {% endif %}
+                        {{ values.campus.ville }}
+                    </p>
+                    {% if values.campus.email %}<p>Pour contacter Campus France : {{ values.campus.email }}</p>{% endif %}
+                </div>
+            </div>
+            {% endif %}
+
+            {# Attachés scientifiques #}
+
+            {% if values.attaches|length != 0 %}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Attachés scientifiques</h3>
+                </div>
+                <div class="panel-body">
+                    {% for attache in values.attaches %}
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <p class="souligne">{{ attache.nom }}
+                                {% if attache.ville %} à {{ attache.ville }}{% endif %}
+                            </p>
+                            {% if attache.email %}<p>Email : {{ attache.email }}</p>{% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            {# Lycées français #}
+
+            {% if values.lycees|length != 0 %}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Lycées français</h3>
+                </div>
+                <div class="panel-body">
+                    {% for lycee in values.lycees %}
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <p class="souligne">Lycée français {{ lycee.nom }}
+                                {% if lycee.ville %} à {{ lycee.ville }}{% endif %} :
+                            </p>
+                            {% if lycee.proviseur %}<p>Proviseur : {{ lycee.proviseur }}</p>{% endif %}
+                            {% if lycee.adr %}
+                                <p>Adresse : {{ lycee.adr }}{% if lycee.cp %} (code postal : {{ lycee.cp }}){% endif %}</p>
+                            {% endif %}
+                            {% if lycee.tel %}<p>Téléphone : {{ lycee.tel }}</p>{% endif %}
+                            {% if lycee.email %}<p>Pour contacter ce lycée : {{ lycee.email }}</p>{% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            {# Ubifrance #}
+
+            {% if (values.ubi_dir) or (values.ubifrance.ville) or (values.ubi_ann|length != 0) %}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Ubifrance</h3>
+                </div>
+                <div class="panel-body">
+                    {% if values.ubi_dir %}<p><span class="souligne">Directeur national d'Ubifrance {{ values.nom }} :</span> {{ values.ubi_dir }}</p>{% endif %}
+
+                    {% if values.ubifrance.ville %}
+                    <div class="panel panel-default">
+                        <div class="panel-heading" style="background-color : #ff3300;">
+                            <h3 class="panel-title">Bureau national à {{ values.ubifrance.ville }}</h3>
+                        </div>
+                        <div class="panel-body">
+                            {% if values.ubifrance.adr %}
+                                <p>Adresse : {{ values.ubifrance.adr }}
+                                {% if values.ubifrance.cp %} (code postal : {{ values.ubifrance.cp }})</p>{% endif %}
+                            {% endif %}
+                            {% if values.ubifrance.tel %}<p>Téléphone : {{ values.ubifrance.tel }}</p>{% endif %}
+                            {% if values.ubifrance.email %}<p>Contact email : {{ values.ubifrance.email }}</p>{% endif %}
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    {% for annexe_ubi in values.ubi_ann %}
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <p class="souligne">Annexe à {{ annexe_ubi.ville }} :</p>
+                            {% if annexe_ubi.adr %}
+                                <p>Adresse : {{ annexe_ubi.adr }}
+                                {% if annexe_ubi.cp %} (code postal : {{ annexe_ubi.cp }}){% endif %}</p>
+                            {% endif %}
+                            {% if annexe_ubi.tel %}<p>Téléphone : {{ annexe_ubi.tel }}</p>{% endif %}
+                            {% if annexe_ubi.email %}<p>Contact email : {{ annexe_ubi.email }}</p>{% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+            {# Chambres du commerce et de l'industrie #}
+
+            {% if (values.chcom_dir) or (values.chcom.ville) or (values.chcom_ann|length != 0) %}
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Chambres du commerce et de l'industrie</h3>
+                </div>
+                <div class="panel-body">
+                    <p><span class="souligne">Directeur national d'Ubifrance {{ values.nom }} :</span> {{ values.chcom_dir }}</p>
+
+                    {% if values.chcom.ville %}
+                    <div class="panel panel-default">
+                        <div class="panel-heading" style="background-color : #ff3300;">
+                            <h3 class="panel-title">Bureau national à {{ values.chcom.ville }}</h3>
+                        </div>
+                        <div class="panel-body">
+                            {% if values.chcom.adr %}
+                                <p>Adresse : {{ values.chcom.adr }}
+                                {% if values.chcom.cp %} (code postal : {{ values.chcom.cp }}){% endif %}</p>
+                            {% endif %}
+                            {% if values.chcom.tel %}<p>Téléphone : {{ values.chcom.tel }}</p>{% endif %}
+                            {% if values.chcom.email %}<p>Contact email : {{ values.chcom.email }}</p>{% endif %}
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    {% for annexe_chcom in values.chcom_ann %}
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <p class="souligne">Annexe à {{ annexe_chcom.ville }} :</p>
+                            {% if annexe_chcom.adr %}
+                                <p>Adresse : {{ annexe_chcom.adr }}
+                                {% if annexe_chcom.cp %} (code postal : {{ annexe_chcom.cp }}){% endif %}</p>
+                            {% endif %}
+                            {% if annexe_chcom.tel %}<p>Téléphone : {{ annexe_chcom.tel }}</p>{% endif %}
+                            {% if annexe_chcom.email %}<p>Contact email : {{ annexe_chcom.email }}</p>{% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endif %}
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $('.active').removeClass();
+        $('#informations').parent().addClass('active');
+     </script>
+{% endblock %}

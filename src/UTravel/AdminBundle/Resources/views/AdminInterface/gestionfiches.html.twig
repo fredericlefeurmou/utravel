@@ -1,0 +1,43 @@
+{% extends 'UTravelAdminBundle::container.html.twig' %}
+
+{% block content %}
+    
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <input type="hidden" id="service" value="{{ id_service }}">
+            <h1 class='text-center'>{{ title }}</h1>
+            <br />
+            <p>
+                Ci-dessous, vous pourrez voir les fiches pays que vous avez déjà créées.
+                <br />
+                Vous pouvez directement créer une nouvelle fiche pays en cliquant sur le bouton directement ci-dessous.
+            </p>
+            <a href="{{ path('utravel_create_fiche_pays') }}"><button type="button" class="btn btn-default"><span>Créer une nouvelle fiche</span></button></a>
+
+            <hr>
+            <legend>Fiches déjà créées</legend>
+            <table class="table">
+                <thead>
+                    <tr class="entete">
+                        <th width=15% class="center">Consulter</th>
+                        <th width=55%>Pays</th>
+                        <th width=15% class="center">Modifier</th>
+                        <th width=15% class="center">Supprimer</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody">
+                {% for fiche in fiches %}
+                    <tr>
+                        <td class="center"><a href="{{ path('utravel_consult_fiche', {'pays' : fiche.nom}) }}" target="_blank"><button type="button" class="btn btn-info btn-sm">Consulter</button></a></td>
+                        <td>{{ fiche.nom }}</td>
+                        <td class="center"><a href="{{ path('utravel_update_fiche_pays', {'id' : fiche.id}) }}"><button type="button" class="btn btn-primary btn-sm">Modifier</button></a></td>
+                        <td class="center"><a href="{{ path('utravel_delete_fiche_pays', {'id' : fiche.id }) }}"><button type="button" class="btn btn-danger btn-sm suppr">Supprimer</button></a></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <br />
+        </div>
+    </div>
+
+{% endblock %}

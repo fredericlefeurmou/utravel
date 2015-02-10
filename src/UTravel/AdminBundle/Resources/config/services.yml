@@ -1,0 +1,7 @@
+parameters:
+#    u_travel_admin.example.class: UTravel\AdminBundle\Example
+
+services:
+#    u_travel_admin.example:
+#        class: %u_travel_admin.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

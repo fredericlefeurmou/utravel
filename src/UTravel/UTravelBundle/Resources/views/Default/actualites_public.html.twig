@@ -1,0 +1,65 @@
+{% extends 'UTravelOpinionBundle::layout.html.twig' %}
+
+{% block title %}UTravel : Actualités{% endblock %}
+
+{% block head %}
+    <link href="{{ asset('bundles/utravelopinion/css/custom.css') }}" rel="stylesheet" type="text/css" media="all" />
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="{{ asset('bundles/utravelutravel/css/infos.css') }}" rel="stylesheet" type="text/css" media="all" />
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <h1 class='text-center'>{{ title }}</h1>
+            <br />
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <p>
+                        Retrouvez toutes les actualités des Relations Internationales sur cette page
+                    </p>
+                </div>
+            </div>
+            <br>
+            {% for i in 0..4 if actus[i] is defined%}
+            <a href="{{ path('utravel_consult_actu', {'id' : actus[i].id }) }}" class="actu-link">
+                <div class="panel panel-default">
+                    <div class="panel-body" style="">
+                        <table style="margin: 0px">
+                            <tr>
+                                <td> <img src="{{ asset('uploads/actus/' ~ actus[i].imagePath) }}" width=120 > </td>
+                                <td class="content">
+                                    <div class="titre">{{ actus[i].titre }}</div>
+                                    <br><div class="text">{{ actus[i].description|raw }}<p>Lire la suite ...</p></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </a>
+            {% endfor %}
+            <span>Pages :</span>
+            <br><br>
+            <div class="row">
+                <div class="col-md-6">
+                    {% if num_page != 1 %}
+                    <a href="{{ path('utravel_actualites', {'section' : '1' }) }}" class="btn btn-default btn-sm">&lt;&lt; 1</a>
+                    <a href="{{ path('utravel_actualites', {'section' : num_page - 1 }) }}" class="btn btn-default btn-sm">&lt; Précédent</a>
+                    {% endif %}
+                    {% if num_page != nb_pages %}
+                    <a href="{{ path('utravel_actualites', {'section' : num_page + 1 }) }}" class="btn btn-default btn-sm">Suivant &gt;</a>
+                    <a href="{{ path('utravel_actualites', {'section' : nb_pages }) }}" class="btn btn-default btn-sm">{{ nb_pages }} &gt;&gt;</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $('.active').removeClass();
+        $('#informations').parent().addClass('active');
+     </script>
+{% endblock %}

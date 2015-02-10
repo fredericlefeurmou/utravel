@@ -1,0 +1,52 @@
+/*
+ * CSS pour ajustements d'éléments des formulaires et pages d'administration
+ */
+
+.btn-display,
+.btn-ajout,
+.btn-suppr-consulat,
+.btn-suppr-attache,
+.btn-suppr-lycee,
+.btn-suppr-ubifrance,
+.btn-suppr-commerce
+{
+    float: right;
+}
+
+.btn { border-radius: 0; }
+
+.btn-ajout { background-color: #ff3300; border-color: #ff3300; }
+.btn-ajout:hover { background-color: rgba(256, 51, 0, 0.8); border-color: rgba(256, 51, 0, 0.8); }
+
+.btn-top { margin-top: -5px; }
+
+.btn-valid { background-color: #066; border-color: #066;}
+.btn-valid:hover { background-color: rgba(0, 102, 102, 0.8); border-color: rgba(0, 102, 102, 0.8); }
+
+.center { text-align: center; }
+
+.entete { background-color: #066; color: white; }
+
+.form-help { font-size: 12px; color: gray; vertical-align: super; }
+
+.label-center { margin-top:7px; }
+
+.panel-info { border-radius: 0px; border-color: #066; }
+
+.panel-info > .panel-heading {
+    color: white;
+    border-color: #066;
+    background-color: #066;
+    border-top-right-radius: 0px;
+    border-top-left-radius: 0px;
+}
+
+.panel-body .form-group { margin-bottom: 4px; }
+
+.sous-legende { font-size: 17px; margin-top: 10px; }
+
+@media (max-width: 992px) {
+    .col-md-offset-2 { margin-right: 10px; margin-left: 10px; }
+}
+
+.align { display: inline; }

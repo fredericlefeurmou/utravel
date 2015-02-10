@@ -1,0 +1,11 @@
+utravel_public:
+    resource: "@UTravelUTravelBundle/Resources/config/routing.yml"
+    prefix:   /
+
+utravel_admin:
+    resource: "@UTravelAdminBundle/Resources/config/routing.yml"
+    prefix:   /admin
+
+utravel_opinion:
+    resource: "@UTravelOpinionBundle/Resources/config/routing.yml"
+

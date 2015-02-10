@@ -1,0 +1,565 @@
+{% extends 'UTravelAdminBundle::container.html.twig' %}
+
+
+{% block content %}
+    
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <input type="hidden" id="service" value="{{ id_service }}">
+            <h1 class='text-center'>{{ title }}</h1>
+            <br />
+            <form class="form-horizontal" method="post" action="{{ path('utravel_valid_fiche_pays') }}" enctype="multipart/form-data">
+                <div class="row">
+                    <div class="col-sm-8 col-sm-offset-2">
+                        <div class="form-help center">Seul le champ "Pays" est obligatoire. Vous pourrez modifier les autres champs en trouvant la fiche depuis la page "Gestion des fiches pays"</div><br>
+                        <div class="form-group">
+                            <label for="pays" class="col-sm-3">Pays : </label>
+                            {% if id_fiche == -1 %}
+                            <div class="col-sm-9">
+                                {% include 'UTravelAdminBundle:Default:liste_pays.html.twig' %}
+                            </div>
+                            {% else %}
+                            <input type="hidden" name="nom" value="{{ values.nom }}">
+                            <span class="label-center">{{ values.nom }}</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row tabbable tabs-left">
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a href="#data_gnl" data-toggle="tab">Général</a></li>
+                        <li><a href="#num_utiles" data-toggle="tab">Numéros tel.</a></li>
+                        <li><a href="#ambassade" data-toggle="tab">Ambassades</a></li>
+                        <li><a href="#education" data-toggle="tab">Education</a></li>
+                        <li><a href="#professionnel" data-toggle="tab">Professionnel</a></li>
+                    </ul>
+
+                    <div id="create_fiche" class="tab-content">
+                        
+    <!-- SECTION : DONNEES GENERALES -->
+
+                        <fieldset class="tab-pane active" id="data_gnl">
+                            <legend> Données générales</legend>
+
+                            {% if values.drapeau %}<div class="form-help">Drapeau déjà chargé : {{ values.drapeau }}</div><br>{% endif %}
+                            <div class="form-group">
+                                <label for="drapeau" class="label-center col-sm-3">Image du drapeau :</label>
+                                <div class="col-sm-9">
+                                    <input type="file" name="drapeau" class="filestyle">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="capitale" class="label-center col-sm-3">Capitale : </label>
+                                <div class="col-sm-9">
+                                    <input name="capitale" type="text" class="form-control" value="{{ values.capitale }}">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="langue" class="label-center col-sm-3">Langue parlée : </label>
+                                <div class="col-sm-9">
+                                    <input name="langue" type="text" class="form-control" value="{{ values.langue }}">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="superficie" class="label-center col-sm-3">Superficie : </label>
+                                <div class="col-sm-9">
+                                    <input name="superficie" type="text" class="form-control" placeholder="Nombre uniquement, en km²." value="{{ values.area }}">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="population" class="label-center col-sm-3">Population : </label>
+                                <div class="col-sm-9">
+                                    <input name="population" type="text" class="form-control" placeholder="Nombre uniquement" value="{{ values.pop }}">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="chef_etat" class="label-center col-sm-3">Chef de l'Etat : </label>
+                                <div class="col-sm-9">
+                                    <input name="chef_etat" type="text" class="form-control" value="{{ values.chef_etat }}">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="jour_national" class="label-center col-sm-3">Jour national : </label>
+                                <div class="col-sm-9">
+                                    <input name="jour_national" type="text" class="form-control" placeholder="Ex : 25 janvier" value="{{ values.jour_nat }}">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-6">
+                                    <label for="monnaie" class="label-center col-lg-4">Monnaie : </label>
+                                    <div class="col-lg-8">
+                                        <input name="monnaie" type="text" class="form-control" value="{{ values.monnaie }}">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <label for="taux" class="label-center col-lg-3">Taux : </label>
+                                    <div class="input-group col-lg-9">
+                                        <span class="input-group-addon">1.00 € =</span>
+                                        <input name="taux" type="text" class="form-control" placeholder="Ex : 1,425" value="{{ values.taux }}">
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+
+    <!-- SECTION : NUMEROS UTILES -->
+
+                        <fieldset class="tab-pane" id="num_utiles">
+                            <legend>Numéros utiles</legend>
+                            <div class="form-group">
+                                <label for="num_police" class="label-center col-sm-3">Police : </label>
+                                <div class="input-group col-lg-6">
+                                    <span class="input-group-addon"><i class="fa fa-taxi"></i></span>
+                                    <input name="num_police" type="text" class="form-control" value="{{ values.numeros.police }}">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="num_samu" class="label-center col-sm-3">Urgences : </label>
+                                <div class="input-group col-lg-6">
+                                    <span class="input-group-addon"><i class="fa fa-ambulance"></i></span>
+                                    <input name="num_samu" type="text" class="form-control" value="{{ values.numeros.urgences }}">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="num_pompiers" class="label-center col-sm-3">Pompiers : </label>
+                                <div class="input-group col-lg-6">
+                                    <span class="input-group-addon"><i class="fa fa-fire-extinguisher"></i></span>
+                                    <input name="num_pompiers" type="text" class="form-control" value="{{ values.numeros.pompiers }}">
+                                </div>
+                            </div>
+                        </fieldset>
+                        
+    <!-- SECTION : AMBASSADES ET CONSULATS -->
+
+                        <fieldset class="tab-pane" id="ambassade">
+
+                <!-- SOUS-SECTION : AMBASSADE -->
+
+                            <legend>Ambassades et consulats</legend>
+                            <div class="panel panel-info">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">Ambassade de France</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <span class="form-help">Si la ville n'est pas renseignée, toutes les informations concernant l'ambassade ne seront pas sauvegardées</span>
+                                    <div class="form-group">
+                                        <div class="col-sm-6">
+                                            <label for="amb_ville">Ville : </label>
+                                            <input name="amb_ville" type="text" class="form-control" value="{{ values.ambassade.ville }}">
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <label for="amb_adresse">Adresse : </label>
+                                            <input name="amb_adresse" type="text" class="form-control" value="{{ values.ambassade.adr }}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-6">
+                                            <label for="amb_cp">Code postal : </label>
+                                            <input name="amb_cp" type="text" class="form-control" value="{{ values.ambassade.cp }}">
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <label for="amb_telephone">Téléphone : </label>
+                                            <input name="amb_telephone" type="text" class="form-control" value="{{ values.ambassade.tel }}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-6">
+                                            <label for="amb_web">Site web : </label>
+                                            <input name="amb_web" type="text" class="form-control" value="{{ values.ambassade.url }}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                <!-- SOUS-SECTION : CONSULAT -->
+
+                            <legend class="sous-legende">Consulats</legend>
+
+                            <span class="form-help">Si la ville d'un consulat n'est pas renseignée, toutes les informations concernant ce consulat ne seront pas sauvegardées</span>
+
+                            {% for consulat in values.consulats %}
+                            <div class="panel panel-info consulat">
+                                <div class="panel-heading" style="height:54px;">
+                                    <button type="button" class="btn btn-primary btn-display">
+                                        <span class="glyphicon glyphicon-chevron-up"></span>
+                                    </button>
+                                    {% if loop.index == values.consulats|length %}
+                                    <button type="button" class="btn btn-danger btn-suppr-consulat">
+                                        <span class="fa fa-times"></span>
+                                    </button>
+                                    {% endif %}
+                                    <h3 class="panel-title">Consulat #{{ loop.index }}</h3>
+                                </div>
+                                <div class="panel-body" id="body">
+                                    <div class="form-group">
+                                        <div class="col-sm-6">
+                                            <label for="consul_{{ loop.index }}[ville]">Ville : </label>
+                                            <input name="consul_{{ loop.index }}[ville]" type="text" class="form-control" value="{{ consulat.ville }}">
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <label for="consul_{{ loop.index }}[adr]">Adresse du consulat : </label>
+                                            <input name="consul_{{ loop.index }}[adr]" type="text" class="form-control" value="{{ consulat.adr }}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-6">
+                                            <label for="consul_{{ loop.index }}[cp]">Code postal : </label>
+                                            <input name="consul_{{ loop.index }}[cp]" type="text" class="form-control" value="{{ consulat.cp }}">
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <label for="consul_{{ loop.index }}[tel]">Téléphone : </label>
+                                            <input name="consul_{{ loop.index }}[tel]" type="text" class="form-control" value="{{ consulat.tel }}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+
+                            <button class="btn btn-primary btn-ajout" type="button" id="new_consulat">Ajouter un consulat</button>
+                        </fieldset>
+                        
+    <!-- SECTION : EDUCATION -->
+
+                        <fieldset class="tab-pane" id="education">
+                            <legend>Education</legend>
+
+                <!-- SOUS-SECTION : CAMPUS FRANCE -->
+
+                            <legend class="sous-legende">Campus France</legend>
+                            <span class="form-help">Si la ville n'est pas renseignée, toutes les informations concernant Campus France ne seront pas sauvegardées</span>
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <div class="form-group">
+                                        <label for="campus_ville" class="label-center col-sm-3">Ville : </label>
+                                        <div class="col-sm-9">
+                                            <input name="campus_ville" type="text" class="form-control" value="{{ values.campus.ville }}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="campus_adresse" class="label-center col-sm-3">Adresse : </label>
+                                        <div class="col-sm-9">
+                                            <input name="campus_adresse" type="text" class="form-control" value="{{ values.campus.adr }}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="campus_cp" class="label-center col-sm-3">Code postal : </label>
+                                        <div class="col-sm-9">
+                                            <input name="campus_cp" type="text" class="form-control" value="{{ values.campus.cp }}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="campus_email" class="label-center col-sm-3">Email : </label>
+                                        <div class="col-sm-9">
+                                            <input name="campus_email" type="text" class="form-control" value="{{ values.campus.email }}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                <!-- SOUS-SECTION : ATTACHES SCIENTIFIQUES -->
+
+                            <legend class="sous-legende">Attachés scientifiques</legend>
+
+                            <span class="form-help">Si le nom de l'attaché n'est pas renseigné, toutes les informations concernant cet attaché ne seront pas sauvegardées</span>
+
+                            {% for attache in values.attaches %}
+                            <div class="panel panel-info attache">
+                                <div class="panel-heading" style="height:54px;">
+                                    <button type="button" class="btn btn-primary btn-display">
+                                        <span class="glyphicon glyphicon-chevron-up"></span>
+                                    </button>
+                                    {% if loop.index == values.attaches|length %}
+                                    <button type="button" class="btn btn-danger btn-suppr-attache">
+                                        <span class="fa fa-times"></span>
+                                    </button>
+                                    {% endif %}
+                                    <h3 class="panel-title">Attaché scientifique #{{ loop.index }}</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="form-group">
+                                        <div class="col-sm-6">
+                                            <label for="attache_{{ loop.index }}[nom]">Prénom / Nom : </label>
+                                            <input name="attache_{{ loop.index }}[nom]" type="text" class="form-control" value="{{ attache.nom }}">
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <label for="attache_{{ loop.index }}[ville]">Ville : </label>
+                                            <input name="attache_{{ loop.index }}[ville]" type="text" class="form-control" value="{{ attache.ville }}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-6">
+                                            <label for="attache_{{ loop.index }}[email]">Email de contact : </label>
+                                            <input name="attache_{{ loop.index }}[email]" type="text" class="form-control" value="{{ attache.email }}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+
+                            <button class="btn btn-primary btn-ajout" type="button" id="new_attache">Ajouter un attaché scientifique</button>
+
+                <!-- SOUS-SECTION : LYCEES FRANCAIS -->
+
+                            <legend class="sous-legende">Lycées français</legend>
+
+                            <span class="form-help">Si le nom du lycée français n'est pas renseigné, toutes les informations concernant ce lycée ne seront pas sauvegardées</span>
+
+                            {% for lycee in values.lycees %}
+                            <div class="panel panel-info lycee">
+                                <div class="panel-heading" style="height:54px;">
+                                    <button type="button" class="btn btn-primary btn-display">
+                                        <span class="glyphicon glyphicon-chevron-up"></span>
+                                    </button>
+                                    {% if loop.index == values.lycees|length %}
+                                    <button type="button" class="btn btn-danger btn-suppr-lycee">
+                                        <span class="fa fa-times"></span>
+                                    </button>
+                                    {% endif %}
+                                    <h3 class="panel-title">Lycée français #{{ loop.index }}</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="form-group">
+                                        <div class="col-sm-6">
+                                            <label for="lycee_{{ loop.index }}[nom]">Nom du lycée : </label>
+                                            <input name="lycee_{{ loop.index }}[nom]" type="text" class="form-control" value="{{ lycee.nom }}">
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <label for="lycee_ {{ loop.index }}[proviseur]">Prénom / Nom du proviseur : </label>
+                                            <input name="lycee_{{ loop.index }}[proviseur]" type="text" class="form-control" value="{{ lycee.proviseur }}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-6">
+                                            <label for="lycee_{{ loop.index }}[ville]">Ville : </label>
+                                            <input name="lycee_{{ loop.index }}[ville]" type="text" class="form-control" value="{{ lycee.ville }}">
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <label for="lycee_{{ loop.index }}[adr]">Adresse : </label>
+                                            <input name="lycee_{{ loop.index }}[adr]" type="text" class="form-control" value="{{ lycee.adr }}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-6">
+                                            <label for="lycee_{{ loop.index }}[cp]">Code postal : </label>
+                                            <input name="lycee_{{ loop.index }}[cp]" type="text" class="form-control" value="{{ lycee.cp }}">
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <label for="lycee_{{ loop.index }}[tel]">Téléphone : </label>
+                                            <input name="lycee_{{ loop.index }}[tel]" type="text" class="form-control" value="{{ lycee.tel }}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-6">
+                                            <label for="lycee_{{ loop.index }}[email]">Email de contact : </label>
+                                            <input name="lycee_{{ loop.index }}[email]" type="text" class="form-control" value="{{ lycee.email }}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+
+                            <button class="btn btn-primary btn-ajout" type="button" id="new_lycee">Ajouter un lycée</button>
+                        </fieldset>
+                        
+    <!-- SECTION : PROFESSIONNEL -->
+
+                        <fieldset class="tab-pane" id="professionnel">
+                            <legend>Professionnel</legend>
+
+                <!-- SOUS-SECTION : UBIFRANCE -->
+
+                            <legend class="sous-legende">Ubifrance</legend>
+                            <div class="form-group">
+                                <label for="ubifrance_dir" class="label-center col-sm-3">Directeur national : </label>
+                                <div class="col-sm-9">
+                                    <input name="ubifrance_dir" type="text" class="form-control" value="{{ values.ubi_dir }}">
+                                </div>
+                            </div>
+
+                            <div class="panel panel-info">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">Bureau national</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <span class="form-help">Si la ville du bureau n'est pas renseignée, toutes les informations concernant le bureau ne seront pas sauvegardées</span>
+                                    <div class="form-group">
+                                        <div class="col-sm-6">
+                                            <label for="ubifrance_ville">Ville : </label>
+                                            <input name="ubifrance_ville" type="text" class="form-control" value="{{ values.ubifrance.ville }}">
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <label for="ubifrance_adresse">Adresse : </label>
+                                            <input name="ubifrance_adresse" type="text" class="form-control" value="{{ values.ubifrance.adr }}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-6">
+                                            <label for="ubifrance_cp">Code postal : </label>
+                                            <input name="ubifrance_cp" type="text" class="form-control" value="{{ values.ubifrance.cp }}">
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <label for="ubifrance_telephone">Téléphone : </label>
+                                            <input name="ubifrance_telephone" type="text" class="form-control" value="{{ values.ubifrance.tel }}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-6">
+                                            <label for="ubifrance_email">Email de contact : </label>
+                                            <input name="ubifrance_email" type="text" class="form-control" value="{{ values.ubifrance.email }}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+
+                            <span class="form-help">Si la ville d'une annexe n'est pas renseignée, toutes les informations concernant cette annexe ne seront pas sauvegardées</span>
+
+                            {% for annexe in values.ubi_ann %}
+                            <div class="panel panel-info ubifrance">
+                                <div class="panel-heading" style="height:54px;">
+                                    <button type="button" class="btn btn-primary btn-display">
+                                        <span class="glyphicon glyphicon-chevron-up"></span>
+                                    </button>
+                                    {% if loop.index == values.ubi_ann|length %}
+                                    <button type="button" class="btn btn-danger btn-suppr-lycee">
+                                        <span class="fa fa-times"></span>
+                                    </button>
+                                    {% endif %}
+                                    <h3 class="panel-title">Annexe Ubifrance #{{ loop.index }}</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="form-group">
+                                        <div class="col-sm-6">
+                                            <label for="ubi_{{ loop.index }}[ville]">Ville : </label>
+                                            <input name="ubi_{{ loop.index }}[ville]" type="text" class="form-control" value="{{ annexe.ville }}">
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <label for="ubi_{{ loop.index }}[adr]">Adresse : </label>
+                                            <input name="ubi_{{ loop.index }}[adr]" type="text" class="form-control" value="{{ annexe.adr }}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-6">
+                                            <label for="ubi_{{ loop.index }}[cp]">Code postal : </label>
+                                            <input name="ubi_{{ loop.index }}[cp]" type="text" class="form-control" value="{{ annexe.cp }}">
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <label for="ubi_{{ loop.index }}[tel]">Téléphone : </label>
+                                            <input name="ubi_{{ loop.index }}[tel]" type="text" class="form-control" value="{{ annexe.tel }}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-6">
+                                            <label for="ubi_{{ loop.index }}[email]">Email de contact : </label>
+                                            <input name="ubi_{{ loop.index }}[email]" type="text" class="form-control" value="{{ annexe.email }}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+
+                            <button class="btn btn-primary btn-ajout" type="button" id="new_ubifrance">Ajouter une annexe</button>
+
+                <!-- SOUS-SECTION : CHAMBRES DE COMMERCE -->
+
+                            <legend class="sous-legende">Chambres de commerce</legend>
+                            <div class="form-group">
+                                <label for="chcom_dir" class="label-center col-sm-3">Directeur national : </label>
+                                <div class="col-sm-9">
+                                    <input name="chcom_dir" type="text" class="form-control" value="{{ values.chcom_dir }}">
+                                </div>
+                            </div>
+
+                            <div class="panel panel-info">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">Bureau national</h3>
+                                </div>
+                                <div class="panel-body">
+                                    <span class="form-help">Si la ville du bureau n'est pas renseignée, toutes les informations concernant le bureau ne seront pas sauvegardées</span>
+                                    <div class="form-group">
+                                        <div class="col-sm-6">
+                                            <label for="chcom_ville">Ville : </label>
+                                            <input name="chcom_ville" type="text" class="form-control" value="{{ values.chcom.ville }}">
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <label for="chcom_adresse">Adresse : </label>
+                                            <input name="chcom_adresse" type="text" class="form-control" value="{{ values.chcom.adr }}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-6">
+                                            <label for="chcom_cp">Code postal : </label>
+                                            <input name="chcom_cp" type="text" class="form-control" value="{{ values.chcom.cp }}">
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <label for="chcom_telephone">Téléphone : </label>
+                                            <input name="chcom_telephone" type="text" class="form-control" value="{{ values.chcom.tel }}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-6">
+                                            <label for="chcom_email">Email de contact : </label>
+                                            <input name="chcom_email" type="text" class="form-control" value="{{ values.chcom.email }}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+
+                            <span class="form-help">Si la ville d'une annexe n'est pas renseignée, toutes les informations concernant cette annexe ne seront pas sauvegardées</span>
+
+                            {% for annexe in values.chcom_ann %}
+                            <div class="panel panel-info commerce">
+                                <div class="panel-heading" style="height:54px;">
+                                    <button type="button" class="btn btn-primary btn-display">
+                                        <span class="glyphicon glyphicon-chevron-up"></span>
+                                    </button>
+                                    <button type="button" class="btn btn-danger btn-suppr-commerce">
+                                        <span class="fa fa-times"></span>
+                                    </button>
+                                    <h3 class="panel-title">Annexe Chambre de commerce #{{ loop.index }}</h3>
+                                </div>
+                                <div class="panel-body" id="body">
+                                    <div class="form-group">
+                                        <div class="col-sm-6">
+                                            <label for="chcom_ann_{{ loop.index }}[ville]">Ville : </label>
+                                            <input name="chcom_ann_{{ loop.index }}[ville]" type="text" class="form-control" value="{{ annexe.ville }}">
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <label for="chcom_ann_{{ loop.index }}[adr]">Adresse : </label>
+                                            <input name="chcom_ann_{{ loop.index }}[adr]" type="text" class="form-control" value="{{ annexe.adr }}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-6">
+                                            <label for="chcom_ann_{{ loop.index }}[cp]">Code postal : </label>
+                                            <input name="chcom_ann_{{ loop.index }}[cp]" type="text" class="form-control" value="{{ annexe.cp }}">
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <label for="chcom_ann_{{ loop.index }}[tel]">Téléphone : </label>
+                                            <input name="chcom_ann_{{ loop.index }}[tel]" type="text" class="form-control" value="{{ annexe.tel }}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-6">
+                                            <label for="chcom_ann_{{ loop.index }}[email]">Email de contact : </label>
+                                            <input name="chcom_ann_{{ loop.index }}[email]" type="text" class="form-control" value="{{ annexe.email }}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+
+                            <button class="btn btn-primary btn-ajout" type="button" id="new_commerce">Ajouter une annexe</button>
+                        </fieldset>                        
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-success btn-valid">Valider la fiche pays</button>
+
+            </form>
+            <br />
+        </div>
+    </div>
+
+{% endblock %}

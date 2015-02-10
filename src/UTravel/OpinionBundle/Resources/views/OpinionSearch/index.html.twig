@@ -1,0 +1,83 @@
+{% extends 'UTravelOpinionBundle::layout.html.twig' %}
+
+{% block content %}
+    
+    <h1 class='text-center'>Rechercher un avis</h1>
+    <form id="form-search" method="POST" action="{{ path('utravel_search_opinion') }}" class="text-center" novalidate>
+        {{ form_widget(form.returnHtml, {'attr': {'value': '1'}}) }}
+        {{ form_widget(form.page, {'attr': {'value': '0', 'class': 'curent-page'}}) }}
+        <div class="row">
+            <div class="col-md-3">
+                {{ form_label(form.journeyType) }}
+            </div>
+            <div class="col-md-3">
+                {{ form_widget(form.journeyType, {'attr': {'class': 'chosen-multiple'}}) }}
+            </div>
+            <div class="col-md-3">
+                {{ form_label(form.language) }}
+            </div>
+            <div class="col-md-3">
+                {{ form_widget(form.language, {'attr': {'class': 'chosen-multiple'} }) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                {{ form_label(form.branch) }}
+            </div>
+            <div class="col-md-3">
+                {{ form_widget(form.branch, {'attr': {'class': 'chosen-multiple branch-select', 'multiple': 'multiple'}}) }}
+            </div>
+            <div class="col-md-3 specialization-div-search">
+                {{ form_label(form.specialization) }}
+            </div>
+            <div class="col-md-3 specialization-div-search">
+                {{ form_widget(form.specialization, {'attr': {'class': 'chosen-multiple specialization-select'} }) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                {{ form_label(form.fullSemester) }}
+            </div>
+            <div class="col-md-3">
+                {{ form_widget(form.fullSemester, {'attr': {'class': 'chosen-multiple'} }) }}
+            </div>
+            <div class="col-md-3">
+                {{ form_label(form.country) }}
+            </div>
+            <div class="col-md-3">
+                {{ form_widget(form.country, {'attr': {'class': 'chosen-multiple-search'} }) }}
+            </div> 
+        </div>
+        <div class="row">
+            <div id="search-status" class="col-md-6"></div>
+            <div class="col-md-3 col-md-offset-3">
+                <button id ="search_button" type="submit" class="btn btn-primary">
+                    <img style="width: 20px;" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIj8+Cjxzdmcgd2lkdGg9IjUxMiIgaGVpZ2h0PSI1MTIiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiA8Zz4KICA8dGl0bGU+TGF5ZXIgMTwvdGl0bGU+CiAgPGc+CiAgIDxwYXRoIGZpbGw9IiNmZmZmZmYiIGQ9Im0zOTcuMzExOTgxLDMyOS40MjgwMDljLTYuMjY1OTYxLC02LjI1IC03LjQ5OTk2OSwtMTcuMzczOTkzIC0zLjQzNzk4OCwtMjUuMjE3MDFjMTQuODEyMDEyLC0yOC41IDIzLjEzOTAwOCwtNjAuOTI5MDE2IDIzLjEzOTAwOCwtOTUuMjE2OThjMCwtMTE0Ljg3OTAxMyAtOTMuMTA1MDExLC0yMDcuOTkzMDExIC0yMDcuOTkyOTk2LC0yMDcuOTkzMDExYy0xMTQuODc4OTk4LDAgLTIwNy45OTQwMDMsOTMuMTEzOTk4IC0yMDcuOTk0MDAzLDIwNy45OTMwMTFjMCwxMTQuODcwOTcyIDkzLjExNDk5LDIwNy45OTQwMTkgMjA3Ljk5NDAwMywyMDcuOTk0MDE5YzM0LjMwNDAwMSwwIDY2LjcxNjk5NSwtOC4zNDM5OTQgOTUuMjE1OTg4LC0yMy4xMjVjNy44MjgwMDMsLTQuMDc4MDMzIDE4Ljk4NDAwOSwtMi44NDQwNTUgMjUuMjAzMDAzLDMuNDA1OTQ1bDEwMS42NTIwMDgsMTAxLjY1MzAxNWM5LjI4MTk4Miw5LjQzNzk4OCAyMS42MjU5NzcsMTQuMDc4MDAzIDMzLjkyMTk5NywxNC4wNzgwMDNjMTIuMjk2OTk3LDAgMjQuNjM5OTg0LC00LjY0MDAxNSAzMy45MjA5OSwtMTQuMDc2OTY1YzE4LjcxOTAyNSwtMTguNzE4MDE4IDE4LjcxOTAyNSwtNDkuMTI0MDg0IDAsLTY3Ljg0MTAwM2wtMTAxLjYyMjAwOSwtMTAxLjY1NDAyMnptLTEzOC4yMTM5ODksLTIuNTE2MDIyYy0xNS41MTU5OTEsNi41NDY5OTcgLTMyLjQ2MDk5OSwxMC4wNzgwMDMgLTUwLjA3Njk5NiwxMC4wNzgwMDNjLTcwLjcxNjAwMywwIC0xMjcuOTk2MDAyLC01Ny4yNzg5OTIgLTEyNy45OTYwMDIsLTEyNy45OTU5NzJjMCwtNzAuNzE2MDM0IDU3LjI3OTk5OSwtMTI3Ljk5NjAzMyAxMjcuOTk2MDAyLC0xMjcuOTk2MDMzYzcwLjcxNzAxLDAgMTI3Ljk5NjAwMiw1Ny4yNzk5OTkgMTI3Ljk5NjAwMiwxMjcuOTk2MDMzYzAsMTcuNzU2OTg5IC0zLjY3MDk5LDM0LjcxNzk1NyAtMTAuMDc2OTk2LDUwLjA3NTk4OWMtMTIuOTM4MDE5LDMwLjM5MDk5MSAtMzcuNDY4OTk0LDU0Ljg4OTk4NCAtNjcuODQyMDEsNjcuODQxOTh6Ii8+CiAgPC9nPgogPC9nPgo8L3N2Zz4=">
+                    Rechercher
+                </button>
+            </div> 
+        </div>
+    </form>
+    
+    <div id="main-search">           
+        <div class="search-pagin">
+                <a class="link-prev-page" style="color: rgb(0,102,102);" href="javascript:changePage(-1)"><i class="fa fa-arrow-circle-left"></i> Précédent</a>
+                <a class="link-next-page" style="color: rgb(0,102,102);" href="javascript:changePage(1)">Suivant <i class="fa fa-arrow-circle-right"></i></a>
+                <div class="page-nb"></div>
+        </div>
+
+        <div id="search-result"></div>
+
+        <div class="search-pagin">
+                <a class="link-prev-page" style="color: rgb(0,102,102);" href="javascript:changePage(-1)"><i class="fa fa-arrow-circle-left"></i> Précédent</a>
+                <a class="link-next-page" style="color: rgb(0,102,102);" href="javascript:changePage(1)">Suivant <i class="fa fa-arrow-circle-right"></i></a>
+                <div class="page-nb"></div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="//cdn.jsdelivr.net/jquery.blockui/2.65.0/jquery.blockUI.min.js"></script>
+    <script src="{{ asset('bundles/utravelopinion/js/bootstrap-multiselect.js') }}"></script>
+    <script src="{{ asset('bundles/utravelopinion/js/search.js') }}"></script>
+{% endblock %}

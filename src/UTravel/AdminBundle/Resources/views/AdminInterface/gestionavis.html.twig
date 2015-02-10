@@ -1,0 +1,95 @@
+{% extends 'UTravelAdminBundle::container.html.twig' %}
+
+{% block content %}
+    
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <input type="hidden" id="service" value="{{ id_service }}">
+            <h1 class='text-center'>{{ title }}</h1>
+            <br />
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Recherche des avis</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="col-sm-6">
+                        <label for="amb_adresse">Pseudo de l'utilisateur : </label>
+                        <input name="amb_adresse" type="text" class="form-control">
+                        <label for="amb_cp">Branche d'étude : </label>
+                        <select name="branche" class="form-control">
+                            <option value="TC">Tronc Commun</option>
+                            <option value="GB">Génie Biologique</option>
+                            <option value="GI">Génie Informatique</option>
+                            <option value="GM">Génie Mécanique</option>
+                            <option value="GP">Génie des Procédés</option>
+                            <option value="GSM">Génie des Systèmes Mécaniques</option>
+                            <option value="GSU">Génie des Systèmes Urbains</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-6 form-group">
+                        <label for="amb_ville">Pays d'accueil : </label>
+                        <input name="amb_ville" type="text" class="form-control">
+                        <label for="amb_telephone">Université d'accueil : </label>
+                        <input name="amb_telephone" type="text" class="form-control">
+                        <br>
+                        <button type="button" class="btn btn-primary" style="float:right;"><i class="glyphicon glyphicon-search"></i> Rechercher</button>
+                    </div>
+                </div>
+            </div>
+
+            <hr>
+
+            <table class="table">
+                <tr>
+                    <th></th>
+                    <th>Informations sur l'avis</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                <tr>   
+                    <td class="center"><a href="http://www.ozap.com" target="_blank"><button type="button" class="btn btn-info btn-sm">Consulter</button></a></td>
+                    <td>Avis posté par truc sur Norvège (autres infos)</td>
+                    <td class="center"><button type="button" class="btn btn-warning btn-sm" onclick="alert_masquer()">Masquer</button></td>
+                    <td class="center"><button type="button" class="btn btn-danger btn-sm" onclick="alert_suppr()">Supprimer</button></td>
+                </tr>
+                <tr>
+                    <td class="center"><a href="http://www.ozap.com" target="_blank"><button type="button" class="btn btn-info btn-sm">Consulter</button></a></td>
+                    <td>Avis posté par DEDE sur Italie (autres infos)</td>
+                    <td class="center"><button type="button" class="btn btn-warning btn-sm" onclick="alert_masquer()">Masquer</button></td>
+                    <td class="center"><button type="button" class="btn btn-danger btn-sm" onclick="alert_suppr()">Supprimer</button></td>
+                </tr>
+                <tr>
+                    <td class="center"><a href="http://www.ozap.com" target="_blank"><button type="button" class="btn btn-info btn-sm">Consulter</button></a></td>
+                    <td>Avis posté par machin sur Suède (autres infos)</td>
+                    <td class="center"><button type="button" class="btn btn-success btn-sm">Afficher</button></td>
+                    <td class="center"><button type="button" class="btn btn-danger btn-sm" onclick="alert_suppr()">Supprimer</button></td>
+                </tr>
+                <tr>
+                    <td class="center"><a href="http://www.ozap.com" target="_blank"><button type="button" class="btn btn-info btn-sm">Consulter</button></a></td>
+                    <td>Avis posté par Super Dupont sur Etats-Unis (autres infos)</td>
+                    <td class="center"><button type="button" class="btn btn-warning btn-sm" onclick="alert_masquer()">Masquer</button></td>
+                    <td class="center"><button type="button" class="btn btn-danger btn-sm" onclick="alert_suppr()">Supprimer</button></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    function alert_masquer()
+    {
+        var reponse = confirm('Cet avis ne sera plus visible par le public, mais reste sauvegardé. Voulez-vous vraiment masquer cet avis ?');
+        if (reponse == true) {
+            /* Requete AJAX de masquage de l'avis */
+        }
+    }
+    function alert_suppr()
+    {
+        var reponse = confirm('Cet avis va être définitivement effacé du serveur. Voulez-vous supprimer cet avis ?');
+        if (reponse == true) {
+            /* Requete AJAX de suppression de l'avis */
+        }
+    }
+</script>
+{% endblock %}

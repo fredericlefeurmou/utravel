@@ -1,0 +1,94 @@
+{% extends 'UTravelOpinionBundle::layout.html.twig' %}
+
+{% block content %}
+    <h1 class='text-center'>Mon compte</h1>
+    {% if user is not null %}
+        <div id="account" class="row account-div">
+            <section class="col-md-5 account-info">
+                <h2>Mes informations</h2>
+                <label>Nom : </label> <span> {{ user.getFirstname() }} {{ user.getLastname() }}</span>
+                <br /><br />
+                <label>Adresse mail : </label> <span class="user-mail">{{ user.getMail() }}</span> 
+                <span id="edit-mail-action">
+                    <a href="javascript:editAccountMail()">changer</a>
+                    <img src="data:image/gif;base64,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"/>
+                </span>
+                <br /><br />
+                <span>
+                    <span class="text-success public-ok" {{ (user.getPublic()) ? '' : 'style="display: none;"' }}><i class="fa fa-check-circle"></i> Vos coordonnées sont visibles par les utilisateurs connectés</span>
+                    <span class="text-warning public-ko" {{ (user.getPublic()) ? 'style="display: none;"' : '' }}><i class="fa fa-exclamation-circle"></i> Vos coordonnées ne sont pas visibles</span>
+                </span><a href="javascript:changeAccountPublic()">changer</a>
+            </section>
+
+            <section class="col-md-6 col-md-offset-1">
+                <table class="table">
+                    <thead>
+                        <tr><th colspan="4">Avis postés</th></tr>
+                    </thead>
+                    <tbody>
+                        {% for opinion in user.getOpinions() %}
+                            <tr id="account-opinion-{{ opinion.getId() }}">
+                                <td>{% if opinion.getPublished() %}
+                                        <a href="{{ path('utravel_display_opinion', {'opinion_id': opinion.getId()}) }}">{{ opinion.getGenericTitle() }}<a>
+                                    {% else %}
+                                        {{ opinion.getGenericTitle() }}
+                                    {% endif %}
+                                </td>
+                                <td>{% if opinion.getPublished() %}<span class="badge alert-success">publié</span>{% endif %}</td>
+                                <td><a href="{{ path('utravel_edit_opinion', {'opinion_id': opinion.getId()}) }}">Editer</a></td>
+                                <td><a id="delete-opinion" href="javascript:deleteOpinion({{ opinion.getId() }})">Supprimer</a></td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </section>
+        </div>
+    {% else %}
+        <p class="text-center">
+            Vous ne disposez pas encore de compte sur UTravel, votre compte sera crée automatiquement dés lors que vous créerai un avis.
+            <br /><br />
+            <a href="{{ path('utravel_new_opinion') }}">Déposer un avis</a>
+        </p>
+    {% endif %}
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        function editAccountMail() {
+            var mail = prompt("Renseignez votre adresse mail de contact :", $('.user-mail').val());
+            if (mail !== null) {
+                $('#edit-mail-action').find('a, img').toggle();
+                $.post('{{ path('utravel_account_change_mail') }}', {'mail': mail.trim()})
+                    .done(function (data) {
+                        $('#edit-mail-action').find('a, img').toggle();
+                        if (data.status === 'ok') {
+                            $('.user-mail').text(data.mail);
+                        } else {
+                            alert(data.error);
+                        }
+                    });
+            }
+        }
+        
+        function changeAccountPublic () {
+            $.post('{{ path('utravel_account_change_public') }}', {})
+                .done(function (data) {
+                    if (data.status === 'ok') {
+                        $('.public-ok, .public-ko').toggle();
+                    }
+                });
+        }
+        
+        function deleteOpinion (opinion_id) {
+            var ok = confirm("Etes-vous sûr de vouloir effacer définitivement cet avis ?");
+            if (ok) {
+                $.post('{{ path('utravel_delete_opinion') }}', {'opinion_id': opinion_id})
+                    .done(function (data) {
+                        if (data.status === 'ok') {
+                            $('#account-opinion-'+data.opinion_id).remove();
+                        }
+                    });
+            }
+        }
+    </script>
+{% endblock %}

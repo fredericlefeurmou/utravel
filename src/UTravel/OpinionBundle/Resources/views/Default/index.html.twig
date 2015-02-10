@@ -1,0 +1,76 @@
+{% extends 'UTravelOpinionBundle::layout.html.twig' %}
+
+{% block head %}
+    {{ parent() }}
+    {% if is_video %}
+        <style>
+            html {
+                background: url("{{ asset('bundles/utravelopinion/images/bg_utravel.jpg') }}") no-repeat center center fixed;
+                -webkit-background-size: cover;
+                 -moz-background-size: cover;
+                 -o-background-size: cover;
+                 background-size: cover;
+                width: 100%;
+            }
+        </style> 
+    {% endif %}
+
+    <link href="{{ asset('bundles/utravelopinion/css/carousel.css') }}" rel="stylesheet" type="text/css" media="all" />
+{% endblock %}
+
+{% block content %}
+    {% if is_video %}
+        <div class="container">            
+            {{ video_link|raw}}
+            <div id="buttons">
+                <a href="{{ path('utravel_research_opinion') }}"><img id="img-consulter" src="{{ asset('bundles/utravelopinion/images/icon_consulter.png') }}" width="100"/></a>
+                <a href="{{ path('utravel_new_opinion') }}"><img id="img-deposer" src="{{ asset('bundles/utravelopinion/images/icon_deposer.png') }}" width ="100"/></a>
+            </div>
+        </div>
+
+    <!-- video_link contient le bloc iframe, option raw pour parser ce bloc html-->
+    <!-- a inclure dans des balises, je te laisse le gerer -->
+    <!-- penser a une image statique, qui ne bougera pas quand l'option choisie est la vidéo -->
+    {# video_link|raw #}
+    {% else %}
+        <!-- on affiche le carousel -->
+    <div id="slides">
+        <div class="slides-container">
+            {% for image in images %}
+                <img src="{{ asset('uploads/carrousel/' ~ image) }}">
+            {% endfor %}
+        </div>
+
+        <nav class="slides-navigation">
+            <a href="#" class="next">
+                <img id="img-next" src="{{ asset('bundles/utravelopinion/images/arrow-right.svg') }}" width="50"/>
+            </a>
+            <a href="#" class="prev">
+                <img id="img-prev" src="{{ asset('bundles/utravelopinion/images/arrow-left.svg') }}" width="50"/>
+            </a>
+        </nav>
+
+        <div id="buttons">
+            <a href="{{ path('utravel_research_opinion') }}"><img id="img-consulter" src="{{ asset('bundles/utravelopinion/images/icon_consulter.png') }}" width="100"/></a>
+            <a href="{{ path('utravel_new_opinion') }}"><img id="img-deposer" src="{{ asset('bundles/utravelopinion/images/icon_deposer.png') }}" width ="100"/></a>
+        </div>
+    </div>
+{% endif %}
+    
+
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $(function() {
+            $('#slides').superslides({
+                hashchange: true,
+                play: 8000
+            });
+        });
+    </script>
+    <script>
+        $('.active').removeClass();
+        $('#accueil').addClass('active');
+    </script>
+{% endblock %}

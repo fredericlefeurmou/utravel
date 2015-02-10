@@ -1,0 +1,44 @@
+{% extends 'UTravelOpinionBundle::layout.html.twig' %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <h1 class='text-center'>Création d'un avis</h1>
+            <br />
+            <p>
+                Pour partager votre expérience à l'étranger rien de plus simple, il vous suffit de remplir un "petit" formulaire.
+                <br /><br />
+                Certaines sections du formulaire sont facultatives, libre à vous de les remplir ou non, toutefois si vous décidez de remplir l'une de ses sections il vous faudra compléter toutes les informations.
+                <br /><br />
+                <strong>Note : Vous pouvez sauvegarder votre saisie en cours même si elle est incomplète.</strong>
+            </p>
+
+            <br />
+            <form method="POST" action="{{ path('utravel_create_opinion') }}" class="text-center">
+                <label for="journey_type">Sélectionner votre type de séjour :</label>
+
+                <br /><br />
+
+                <select id="journey_type" name="journey_type" class="chosen-single">
+                    {% for type in journey_types %}
+                        <option value="{{ type.getId() }}">{{ type.getName() }}</option>
+                    {% endfor %}
+                </select>
+
+                <br /><br /><br />
+
+                <button type="submit" id="creer_avis" class="btn btn-default">Créer un avis</button>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/utravelopinion/js/edit.js') }}"></script>
+    <script>
+        $('.active').removeClass();
+        $('#avis').addClass('active');
+     </script>
+{% endblock %}
